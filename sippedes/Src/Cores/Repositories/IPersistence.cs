@@ -1,4 +1,4 @@
-namespace livecode_net_advanced.Cores.Repositories;
+namespace sippedes.Cores.Repositories;
 
 public interface IPersistence
 {

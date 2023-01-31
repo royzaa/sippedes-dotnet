@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-namespace livecode_net_advanced.Cores.Repositories;
+namespace sippedes.Cores.Repositories;
 
 public interface IRepository<TEntity>
 {

@@ -1,6 +1,6 @@
-using livecode_net_advanced.Cores.Entities;
+using sippedes.Cores.Entities;
 
-namespace livecode_net_advanced.Cores.Security;
+namespace sippedes.Cores.Security;
 
 public interface IJwtUtils
 {

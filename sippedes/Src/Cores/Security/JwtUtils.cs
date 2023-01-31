@@ -1,9 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using livecode_net_advanced.Cores.Entities;
-using livecode_net_advanced.Cores.Security;
 using Microsoft.IdentityModel.Tokens;
+using sippedes.Cores.Entities;
+using sippedes.Cores.Security;
 
 
 public class JwtUtils : IJwtUtils

@@ -1,8 +1,8 @@
 using System.Linq.Expressions;
-using livecode_net_advanced.Cores.Database;
 using Microsoft.EntityFrameworkCore;
+using sippedes.Cores.Database;
 
-namespace livecode_net_advanced.Cores.Repositories;
+namespace sippedes.Cores.Repositories;
 
 public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 {

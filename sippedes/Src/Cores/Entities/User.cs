@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using livecode_net_advanced.Commons.Constants;
+using sippedes.Commons.Constants;
 
-namespace livecode_net_advanced.Cores.Entities;
+namespace sippedes.Cores.Entities;
 
 public class User
 {

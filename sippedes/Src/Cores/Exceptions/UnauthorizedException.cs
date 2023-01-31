@@ -1,4 +1,4 @@
-namespace livecode_net_advanced.Cores.Exceptions;
+namespace sippedes.Cores.Exceptions;
 
 public class UnauthorizedException : Exception
 {

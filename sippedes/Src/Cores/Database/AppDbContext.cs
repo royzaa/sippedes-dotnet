@@ -1,7 +1,6 @@
-﻿using livecode_net_advanced.Cores.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace livecode_net_advanced.Cores.Database;
+namespace sippedes.Cores.Database;
 
 public class AppDbContext : DbContext
 {

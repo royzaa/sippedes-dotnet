@@ -1,9 +1,9 @@
 using System.Net;
-using System.Text.Json.Nodes;
 using livecode_net_advanced.Cores.Dto;
-using livecode_net_advanced.Cores.Exceptions;
+using sippedes.Cores.Dto;
+using sippedes.Cores.Exceptions;
 
-namespace livecode_net_advanced.Cores.Middlewares;
+namespace sippedes.Cores.Middlewares;
 
 [Obsolete("Experimental Code")]
 public class ResponseHandlingMiddleware : IMiddleware

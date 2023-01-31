@@ -1,11 +1,8 @@
-﻿using System.Text;
-using livecode_net_advanced.Cores.Middlewares;
-using livecode_net_advanced.Cores.Repositories;
-using livecode_net_advanced.Cores.Security;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
+﻿using sippedes.Cores.Middlewares;
+using sippedes.Cores.Repositories;
+using sippedes.Cores.Security;
 
-namespace livecode_net_advanced.Cores.Extensions;
+namespace sippedes.Cores.Extensions;
 
 public static class ConfigServiceCollectionExtension
 {

@@ -1,4 +1,4 @@
-﻿namespace livecode_net_advanced.Cores.Dto;
+﻿namespace sippedes.Cores.Dto;
 
 [Obsolete("Experimental Code")]
 public  class Response

@@ -1,4 +1,6 @@
-﻿namespace livecode_net_advanced.Cores.Dto;
+﻿using livecode_net_advanced.Cores.Dto;
+
+namespace sippedes.Cores.Dto;
 
 public class ErrorResponse : Response
 {

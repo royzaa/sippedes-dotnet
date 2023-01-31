@@ -1,9 +1,9 @@
-using System.Text.Json;
 using livecode_net_advanced.Cores.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using sippedes.Cores.Dto;
 
-namespace livecode_net_advanced.Cores.Controller;
+namespace sippedes.Cores.Controller;
 
 [ApiController]
 [Authorize]

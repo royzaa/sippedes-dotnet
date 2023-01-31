@@ -1,4 +1,4 @@
-﻿namespace livecode_net_advanced.Commons.Constants;
+﻿namespace sippedes.Commons.Constants;
 
 public enum ETransactionType
 {
