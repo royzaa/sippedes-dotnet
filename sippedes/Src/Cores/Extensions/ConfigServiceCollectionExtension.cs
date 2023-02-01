@@ -1,6 +1,8 @@
-﻿using sippedes.Cores.Middlewares;
+﻿using sib_api_v3_sdk.Api;
+using sippedes.Cores.Middlewares;
 using sippedes.Cores.Repositories;
 using sippedes.Cores.Security;
+using sippedes.Features.Mail.Services;
 
 namespace sippedes.Cores.Extensions;
 
@@ -9,6 +11,10 @@ public static class ConfigServiceCollectionExtension
     public static IServiceCollection AddMyDependencyGroup(
         this IServiceCollection services, ConfigurationManager config)
     {
+        services.AddSingleton<TransactionalEmailsApi>();
+
+        services.AddTransient<IMailService, MailService>();
+        
         services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
         
         services.AddTransient<IJwtUtils, JwtUtils>();
