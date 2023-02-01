@@ -8,6 +8,8 @@ public class AppDbContext : DbContext
 
     public DbSet<CivilData> CivilDatas => Set<CivilData>();
 
+    public DbSet<Otp> Otps => Set<Otp>();
+
     protected AppDbContext()
     {
     }

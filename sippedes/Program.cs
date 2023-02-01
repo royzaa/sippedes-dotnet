@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using sib_api_v3_sdk.Client;
 using sippedes.Cores.Database;
 using sippedes.Cores.Extensions;
 using sippedes.Cores.Middlewares;
@@ -8,7 +9,8 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-
+        
+        Configuration.Default.AddApiKey("api-key", builder.Configuration["SendinblueApiKey"]);
 
         builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
