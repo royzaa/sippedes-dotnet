@@ -1,6 +1,7 @@
 ﻿using sippedes.Cores.Middlewares;
 using sippedes.Cores.Repositories;
 using sippedes.Cores.Security;
+using sippedes.Src.Features.Users.Services;
 
 namespace sippedes.Cores.Extensions;
 
@@ -13,8 +14,10 @@ public static class ConfigServiceCollectionExtension
         
         services.AddTransient<IJwtUtils, JwtUtils>();
         // services.AddTransient<IAuthService, AuthService>();
+        services.AddTransient<IUserService, UserService>();
 
         services.AddTransient<IPersistence, DbPersistence>();
+        
         
         services.AddSingleton<ResponseHandlingMiddleware>();
 
