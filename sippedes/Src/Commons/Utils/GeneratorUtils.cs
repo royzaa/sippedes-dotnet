@@ -16,7 +16,7 @@ public static class GeneratorUtils
     public static int GenerateRondomNumeric()
     {
         const string chars = "0123456789";
-        return new string(Enumerable.Repeat(chars, 6)
+        return new string(Enumerable.Repeat(chars, 7)
             .Select(s => s[_random.Next(s.Length)]).ToArray()).ParseToInt();
     }
 }

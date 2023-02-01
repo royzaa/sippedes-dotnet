@@ -19,15 +19,17 @@ public class OtpController : BaseController
 
     [HttpPost("send-otp")]
     [Authorize(Roles = "Civilian")]
+    // [AllowAnonymous]
     public async Task<IActionResult> SendOtp([FromBody] SendOtpReqDto payload)
     {
         var result = await _otpService.SendOtp(payload);
 
         return Success(result);
     }
-    
+
     [HttpPost("verify-otp")]
     [Authorize(Roles = "Civilian")]
+    // [AllowAnonymous]
     public async Task<IActionResult> VerifyOtp([FromBody] VerifyOtpReqDto payload)
     {
         var result = await _otpService.VerifyOtp(payload);

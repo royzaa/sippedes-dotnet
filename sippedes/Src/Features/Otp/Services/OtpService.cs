@@ -34,8 +34,12 @@ public class OtpService : IOtpService
                 LastExpiration = DateTime.Now.AddMinutes(10),
                 CreatedAt = DateTime.Now
             });
+            await _persistence.SaveChangesAsync();
             return otp;
         });
+
+        // TODO: 
+        // Get Civil Data by UserId
 
         var result = await SendMailOtp(payload, randomCode);
 
@@ -51,7 +55,7 @@ public class OtpService : IOtpService
             {
                 Success = false
             };
-        return  new VerifyOtpResDto
+        return new VerifyOtpResDto
         {
             Success = true
         };
@@ -65,19 +69,19 @@ public class OtpService : IOtpService
         {
             throw new NotFoundException("verifikasi otp gagal");
         }
+
         return otp;
     }
 
     private async Task<CreateSmtpEmail> SendMailOtp(SendOtpReqDto payload, int randomCode)
     {
+        var sendSmtpEmailTo = new SendSmtpEmailTo(email: payload.Email);
+
         return await _mailService.SendMail(new SendSmtpEmail
         {
             To = new List<SendSmtpEmailTo>
             {
-                new SendSmtpEmailTo
-                {
-                    Email = payload.Email
-                }
+                sendSmtpEmailTo
             },
             Sender = new SendSmtpEmailSender
             {
