@@ -1,4 +1,6 @@
-﻿namespace sippedes.Src.Features.CivilDatas.DTO
+﻿using sippedes.Cores.Entities;
+
+namespace sippedes.Src.Features.CivilDatas.DTO
 {
     public class CivilDataResponse
     {

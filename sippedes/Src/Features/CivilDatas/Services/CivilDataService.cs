@@ -137,7 +137,6 @@ namespace sippedes.Src.Features.CivilDatas.Services
             }
         }
 
-
         public async Task<CivilDataResponse> Update(CivilData payload)
         {
             var civilData = await _civilRepository.Find(criteria: c => c.NIK == payload.NIK);
