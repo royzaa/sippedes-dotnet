@@ -435,6 +435,6 @@ FodyWeavers.xsd
 *.sln.iml
 
 _ReSharper.*
-bin
-obj
-packages
+bin/
+obj/
+packages/

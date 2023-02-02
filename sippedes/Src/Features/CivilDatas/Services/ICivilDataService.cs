@@ -1,6 +1,6 @@
 ﻿using sippedes.Cores.Dto;
 using sippedes.Cores.Entities;
-using sippedes.Features.CivilDatas.DTO;
+using sippedes.Src.Features.CivilDatas.DTO;
 
 namespace sippedes.Src.Features.CivilDatas.Services
 {

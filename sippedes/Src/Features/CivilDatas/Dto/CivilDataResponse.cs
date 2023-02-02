@@ -1,4 +1,4 @@
-﻿namespace sippedes.Features.CivilDatas.DTO
+﻿namespace sippedes.Src.Features.CivilDatas.DTO
 {
     public class CivilDataResponse
     {
