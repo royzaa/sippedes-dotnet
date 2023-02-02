@@ -129,6 +129,18 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 
         return await query.Where(criteria).ToListAsync();
     }
+    
+    public async Task<IEnumerable<TEntity>> FindAll(Expression<Func<TEntity, bool>> criteria, Expression<Func<TEntity, object>>? orderBy, string direction)
+    {
+        var query = _context.Set<TEntity>().AsQueryable();
+        
+        if (orderBy != null)
+        {
+            query = direction == "ASC" ? query.OrderBy(orderBy) : query.OrderByDescending(orderBy);
+        }
+
+        return await query.Where(criteria).ToListAsync();
+    }
 
     public TEntity Update(TEntity entity)
     {

@@ -7,7 +7,7 @@ using sippedes.Features.Otp.Services;
 
 namespace sippedes.Features.Otp.Controller;
 
-[Microsoft.AspNetCore.Components.Route("api/otp")]
+[Route("api/otp")]
 public class OtpController : BaseController
 {
     private readonly IOtpService _otpService;

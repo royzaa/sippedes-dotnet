@@ -30,8 +30,6 @@
 
     <ItemGroup>
       <Folder Include="Src\Features\Mail\Dto" />
-      <Folder Include="Src\Features\PushNotification\Controllers" />
-      <Folder Include="Src\Features\PushNotification\Services" />
     </ItemGroup>
 
 </Project>
