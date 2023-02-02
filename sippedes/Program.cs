@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using sippedes.Cores.Database;
 using sippedes.Cores.Extensions;
 using sippedes.Cores.Middlewares;
@@ -9,9 +10,10 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        //Configuration.Default.AddApiKey("api-key", builder.Configuration["SendinblueApiKey"]);
 
         builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
 
@@ -21,7 +23,7 @@ public class Program
         });
 
         builder.Services.AddMyDependencyGroup(builder.Configuration);
-        
+
 
         var app = builder.Build();
 

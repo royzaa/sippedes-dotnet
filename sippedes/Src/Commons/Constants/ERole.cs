@@ -3,6 +3,5 @@
 public enum ERole
 {
     Admin,
-    SuperAdmin,
-    Customer
+    Civilin
 }

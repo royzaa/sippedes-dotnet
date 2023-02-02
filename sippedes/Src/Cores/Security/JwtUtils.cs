@@ -3,8 +3,8 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using sippedes.Cores.Entities;
-using sippedes.Cores.Security;
 
+namespace sippedes.Cores.Security;
 
 public class JwtUtils : IJwtUtils
 {
@@ -15,11 +15,12 @@ public class JwtUtils : IJwtUtils
         _configuration = configuration;
     }
 
-    public string GenerateToken(User user)
+    public string GenerateToken(UserCredential credential)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.UTF8.GetBytes(_configuration["JwtSettings:Key"]);
 
+        // didalam payload
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Audience = _configuration["JwtSettings:Audience"],
@@ -28,8 +29,8 @@ public class JwtUtils : IJwtUtils
             IssuedAt = DateTime.Now,
             Subject = new ClaimsIdentity(new List<Claim>
             {
-                new(ClaimTypes.Email, user.Email),
-                new(ClaimTypes.Role, user.Role.ToString())
+                new (ClaimTypes.Email, credential.Email),
+                new (ClaimTypes.Role, credential.Role.ERole.ToString())
             }),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256)
         };
