@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\62822\\source\\repos\\sippedes\\sippedes\\sippedes.csproj": {}
+    "D:\\Development\\Enigma\\Livecode\\sippedes\\sippedes\\sippedes.csproj": {}
   },
   "projects": {
-    "C:\\Users\\62822\\source\\repos\\sippedes\\sippedes\\sippedes.csproj": {
+    "D:\\Development\\Enigma\\Livecode\\sippedes\\sippedes\\sippedes.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\62822\\source\\repos\\sippedes\\sippedes\\sippedes.csproj",
+        "projectUniqueName": "D:\\Development\\Enigma\\Livecode\\sippedes\\sippedes\\sippedes.csproj",
         "projectName": "sippedes",
-        "projectPath": "C:\\Users\\62822\\source\\repos\\sippedes\\sippedes\\sippedes.csproj",
-        "packagesPath": "C:\\Users\\62822\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\62822\\source\\repos\\sippedes\\sippedes\\obj\\",
+        "projectPath": "D:\\Development\\Enigma\\Livecode\\sippedes\\sippedes\\sippedes.csproj",
+        "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
+        "outputPath": "D:\\Development\\Enigma\\Livecode\\sippedes\\sippedes\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\62822\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -86,7 +84,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     }
