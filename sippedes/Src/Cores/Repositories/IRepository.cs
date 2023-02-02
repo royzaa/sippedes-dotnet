@@ -16,7 +16,13 @@ public interface IRepository<TEntity>
     Task<IEnumerable<TEntity>> FindAll(Expression<Func<TEntity, bool>> criteria, string[] includes);
     Task<IEnumerable<TEntity>> FindAll(Expression<Func<TEntity, bool>> criteria, int page, int size);
     Task<IEnumerable<TEntity>> FindAll(Expression<Func<TEntity, bool>> criteria, int page, int size, string[] includes);
-    Task<IEnumerable<TEntity>> FindAll(Expression<Func<TEntity, bool>> criteria, int? page, int? size, string[]? includes, Expression<Func<TEntity, object>>? orderBy, string direction);
+
+    Task<IEnumerable<TEntity>> FindAll(Expression<Func<TEntity, bool>> criteria, int? page, int? size,
+        string[]? includes, Expression<Func<TEntity, object>>? orderBy, string direction);
+
+    Task<IEnumerable<TEntity>> FindAll(Expression<Func<TEntity, bool>> criteria,
+        Expression<Func<TEntity, object>>? orderBy, string direction);
+
     TEntity Update(TEntity entity);
     void Delete(TEntity entity);
     void DeleteAll(IEnumerable<TEntity> entities);

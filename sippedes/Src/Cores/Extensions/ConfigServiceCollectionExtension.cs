@@ -9,7 +9,11 @@ using sippedes.Src.Features.CivilDatas.Services;
 using sippedes.Features.Admin.Services;
 using sippedes.Features.Auth.Services;
 using System.Text;
+using CorePush.Apple;
+using CorePush.Google;
 using sib_api_v3_sdk.Api;
+using sippedes.Cores.Model;
+using sippedes.Features.PushNotification.Services;
 
 namespace sippedes.Cores.Extensions;
 
@@ -28,6 +32,12 @@ public static class ConfigServiceCollectionExtension
         services.AddTransient<IAdminDataService, AdminDataService>();
         services.AddTransient<IAuthService, AuthService>();
         services.AddTransient<ICivilDataService, CivilDataService>();
+        services.AddTransient<INotificationService, NotificationService>();
+
+        // HttpClient
+        services.AddHttpClient<FcmSender>();
+        services.AddHttpClient<ApnSender>();
+
 
         // Repository
         services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
@@ -35,6 +45,10 @@ public static class ConfigServiceCollectionExtension
         
         // Middleware
         services.AddSingleton<ResponseHandlingMiddleware>();
+        
+        // Configure strongly typed settings objects
+        var appSettingsSection = config.GetSection("FcmNotification");
+        services.Configure<FcmConfigurationModel>(appSettingsSection);
 
         services.AddAuthentication(options =>
         {
