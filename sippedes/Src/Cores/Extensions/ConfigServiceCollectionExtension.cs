@@ -1,4 +1,5 @@
-﻿using sippedes.Cores.Middlewares;
+﻿using sib_api_v3_sdk.Api;
+using sippedes.Cores.Middlewares;
 using sippedes.Cores.Repositories;
 using sippedes.Cores.Security;
 using sippedes.Features.Mail.Services;
