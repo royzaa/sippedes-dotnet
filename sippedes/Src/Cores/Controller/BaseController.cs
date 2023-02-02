@@ -6,7 +6,7 @@ using sippedes.Cores.Dto;
 namespace sippedes.Cores.Controller;
 
 [ApiController]
-[Authorize]
+//[Authorize]
 public abstract class BaseController : ControllerBase
 {
     protected IActionResult MyResult <T> (CommonResponse<T> result)
