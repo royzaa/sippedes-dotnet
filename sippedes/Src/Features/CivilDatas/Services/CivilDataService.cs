@@ -4,8 +4,8 @@ using sippedes.Cores.Dto;
 using sippedes.Cores.Entities;
 using sippedes.Cores.Exceptions;
 using sippedes.Cores.Repositories;
+using sippedes.Features.CivilDatas.DTO;
 using sippedes.Migrations;
-using sippedes.Src.Features.CivilDatas.DTO;
 
 namespace sippedes.Src.Features.CivilDatas.Services
 {

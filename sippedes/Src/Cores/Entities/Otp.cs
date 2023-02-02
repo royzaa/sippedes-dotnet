@@ -18,5 +18,5 @@ public class Otp
     
     [Column(name:"created_at")] public DateTime CreatedAt { get; set; }
 
-    public virtual User? User { get; set; }
+    public virtual UserCredential? User { get; set; }
 }

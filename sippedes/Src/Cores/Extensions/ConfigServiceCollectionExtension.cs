@@ -8,8 +8,8 @@ using sippedes.Features.Otp.Services;
 using sippedes.Src.Features.CivilDatas.Services;
 using sippedes.Features.Admin.Services;
 using sippedes.Features.Auth.Services;
-using sippedes.Features.CivilDatas.Services;
 using System.Text;
+using sib_api_v3_sdk.Api;
 
 namespace sippedes.Cores.Extensions;
 
