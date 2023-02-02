@@ -4,5 +4,5 @@ namespace sippedes.Cores.Security;
 
 public interface IJwtUtils
 {
-    string GenerateToken(User user);
+    string GenerateToken(UserCredential credential);
 }

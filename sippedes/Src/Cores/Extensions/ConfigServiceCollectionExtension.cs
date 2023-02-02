@@ -1,10 +1,15 @@
-﻿using sib_api_v3_sdk.Api;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using sippedes.Cores.Middlewares;
 using sippedes.Cores.Repositories;
 using sippedes.Cores.Security;
 using sippedes.Features.Mail.Services;
 using sippedes.Features.Otp.Services;
 using sippedes.Src.Features.CivilDatas.Services;
+using sippedes.Features.Admin.Services;
+using sippedes.Features.Auth.Services;
+using sippedes.Features.CivilDatas.Services;
+using System.Text;
 
 namespace sippedes.Cores.Extensions;
 
@@ -19,7 +24,9 @@ public static class ConfigServiceCollectionExtension
         services.AddTransient<IOtpService, OtpService>();
         services.AddTransient<IMailService, MailService>();
         services.AddTransient<IJwtUtils, JwtUtils>();
-        // services.AddTransient<IAuthService, AuthService>();
+        services.AddTransient<IRoleService, RoleService>();
+        services.AddTransient<IAdminDataService, AdminDataService>();
+        services.AddTransient<IAuthService, AuthService>();
         services.AddTransient<ICivilDataService, CivilDataService>();
 
         // Repository
@@ -29,24 +36,23 @@ public static class ConfigServiceCollectionExtension
         // Middleware
         services.AddSingleton<ResponseHandlingMiddleware>();
 
-        // services.AddAuthentication(options =>
-        // {
-        //     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        //     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        // }).AddJwtBearer(options =>
-        // {
-        //     options.TokenValidationParameters = new TokenValidationParameters
-        //     {
-        //         ValidateIssuer = true,
-        //         ValidateAudience = true,
-        //         ValidateLifetime = false,
-        //         ValidateIssuerSigningKey = true,
-        //         ValidIssuer = config["JwtSettings:Issuer"],
-        //         ValidAudience = config["JwtSettings:Audience"],
-        //         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtSettings:Key"]))
-        //     };
-        // });
-
+        services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = false,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = config["JwtSettings:Issuer"],
+                ValidAudience = config["JwtSettings:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtSettings:Key"]))
+            };
+        });
 
         return services;
     }
