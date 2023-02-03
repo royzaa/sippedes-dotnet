@@ -1,9 +1,12 @@
-﻿using sib_api_v3_sdk.Model;
+﻿using Hangfire;
+using sib_api_v3_sdk.Model;
 using sippedes.Commons.Utils;
 using sippedes.Cores.Exceptions;
 using sippedes.Cores.Repositories;
+using sippedes.Features.CivilDatas.Services;
 using sippedes.Features.Mail.Services;
 using sippedes.Features.Otp.Dto;
+using Task = System.Threading.Tasks.Task;
 
 namespace sippedes.Features.Otp.Services;
 
@@ -11,18 +14,21 @@ public class OtpService : IOtpService
 {
     private readonly IRepository<Cores.Entities.Otp> _repository;
     private readonly IMailService _mailService;
+    private readonly ICivilDataService _civilDataService;
     private readonly IPersistence _persistence;
 
-    public OtpService(IRepository<Cores.Entities.Otp> repository, IPersistence persistence, IMailService mailService)
+    public OtpService(IRepository<Cores.Entities.Otp> repository, IPersistence persistence, IMailService mailService,
+        ICivilDataService civilDataService)
     {
         _repository = repository;
         _persistence = persistence;
         _mailService = mailService;
+        _civilDataService = civilDataService;
     }
 
     public async Task<CreateSmtpEmail> SendOtp(SendOtpReqDto payload)
     {
-        var randomCode = GeneratorUtils.GenerateRondomNumeric();
+        var randomCode = GeneratorUtils.GenerateRandomNumeric();
 
         var otpResult = await _persistence.ExecuteTransactionAsync<Cores.Entities.Otp>(async () =>
         {
@@ -31,7 +37,7 @@ public class OtpService : IOtpService
                 user_id = payload.UserId,
                 OtpCode = randomCode,
                 IsExpired = 0,
-                LastExpiration = DateTime.Now.AddMinutes(10),
+                LastExpiration = DateTime.Now.AddMinutes(5),
                 CreatedAt = DateTime.Now
             });
             await _persistence.SaveChangesAsync();
@@ -41,6 +47,8 @@ public class OtpService : IOtpService
         // TODO: 
         // Get Civil Data by UserId
 
+        BackgroundJob.Schedule(() => UpdateExpiredOtp(otpResult), DateTime.Now.AddMinutes(5));
+
         var result = await SendMailOtp(payload, randomCode);
 
         return result;
@@ -49,6 +57,7 @@ public class OtpService : IOtpService
     public async Task<VerifyOtpResDto> VerifyOtp(VerifyOtpReqDto payload)
     {
         var validOtp = await GetValidOtp(payload);
+
 
         if (validOtp.OtpCode != payload.OtpCode)
             return new VerifyOtpResDto
@@ -67,7 +76,7 @@ public class OtpService : IOtpService
 
         if (otp is null)
         {
-            throw new NotFoundException("verifikasi otp gagal");
+            throw new NotFoundException("otp expired/not match");
         }
 
         return otp;
@@ -94,6 +103,18 @@ public class OtpService : IOtpService
                 // FNAME = "",
                 SMS = randomCode
             }
+        });
+    }
+
+    public async Task UpdateExpiredOtp(Cores.Entities.Otp otp)
+    {
+        otp.IsExpired = 1;
+        await _persistence.ExecuteTransactionAsync(async () =>
+        {
+            var expiredOtp = _repository.Update(otp);
+            await _persistence.SaveChangesAsync();
+
+            return expiredOtp;
         });
     }
 }
