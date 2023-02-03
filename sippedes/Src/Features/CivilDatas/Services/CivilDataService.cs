@@ -4,9 +4,10 @@ using sippedes.Cores.Dto;
 using sippedes.Cores.Entities;
 using sippedes.Cores.Exceptions;
 using sippedes.Cores.Repositories;
-using sippedes.Src.Features.CivilDatas.DTO;
+using sippedes.Features.CivilDatas.DTO;
+using sippedes.Features.CivilDatas.Services;
 
-namespace sippedes.Src.Features.CivilDatas.Services
+namespace sippedes.Features.CivilDatas.Services
 {
     public class CivilDataService : ICivilDataService
     {

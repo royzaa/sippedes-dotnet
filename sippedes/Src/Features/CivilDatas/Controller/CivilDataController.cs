@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using sippedes.Cores.Controller;
 using sippedes.Cores.Dto;
 using sippedes.Cores.Entities;
-using sippedes.Src.Features.CivilDatas.Services;
+using sippedes.Features.CivilDatas.Services;
 
 namespace sippedes.Src.Features.CivilDatas.Controller
 {
