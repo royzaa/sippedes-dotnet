@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using sippedes.Cores.Controller;
 using sippedes.Cores.Entities;
 using sippedes.Features.Letters.Services;
@@ -10,7 +11,7 @@ namespace sippedes.Features.Letters.Controllers
     {
         private readonly ILetterCategoryService _letterCategoryService;
 
-        public LetterCategoryController(LetterCategoryService letterCategoryService)
+        public LetterCategoryController(ILetterCategoryService letterCategoryService)
         {
             _letterCategoryService = letterCategoryService;
         }
@@ -30,6 +31,7 @@ namespace sippedes.Features.Letters.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllCategories([FromQuery] int page = 1, [FromQuery] int size = 5)
         {
             var categories = await _letterCategoryService.GetAllCategories(page, size);

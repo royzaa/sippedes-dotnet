@@ -34,9 +34,9 @@ public static class ConfigServiceCollectionExtension
         services.AddTransient<IAuthService, AuthService>();
         services.AddTransient<ICivilDataService, CivilDataService>();
         services.AddTransient<INotificationService, NotificationService>();
-        services.AddTransient<ILetterService, LetterService>();
-        services.AddTransient<ITrackingStatusService, TrackingStatusService>();
-        services.AddTransient<ILetterCategoryService, LetterCategoryService>();
+        services.AddScoped<ILetterService, LetterService>();
+        services.AddScoped<ITrackingStatusService, TrackingStatusService>();
+        services.AddScoped<ILetterCategoryService, LetterCategoryService>();
 
         // HttpClient
         services.AddHttpClient<FcmSender>();
