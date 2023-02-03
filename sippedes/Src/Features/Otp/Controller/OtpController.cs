@@ -18,7 +18,7 @@ public class OtpController : BaseController
     }
 
     [HttpPost("send-otp")]
-    [Authorize(Roles = "Civilian")]
+    // [Authorize(Roles = "Civilian")]
     // [AllowAnonymous]
     public async Task<IActionResult> SendOtp([FromBody] SendOtpReqDto payload)
     {
@@ -28,7 +28,7 @@ public class OtpController : BaseController
     }
 
     [HttpPost("verify-otp")]
-    [Authorize(Roles = "Civilian")]
+    // [Authorize(Roles = "Civilian")]
     // [AllowAnonymous]
     public async Task<IActionResult> VerifyOtp([FromBody] VerifyOtpReqDto payload)
     {

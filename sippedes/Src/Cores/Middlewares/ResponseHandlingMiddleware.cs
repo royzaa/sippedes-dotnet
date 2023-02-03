@@ -1,5 +1,6 @@
 using System.Net;
 using livecode_net_advanced.Cores.Dto;
+using Microsoft.IdentityModel.Tokens;
 using sippedes.Cores.Dto;
 using sippedes.Cores.Exceptions;
 
@@ -54,7 +55,8 @@ public class ResponseHandlingMiddleware : IMiddleware
             case not null:
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 _response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                _response.Message = "Internal Server Error";
+                _response.Message = exception.Message.IsNullOrEmpty() ? "Internal Server Error" : exception.Message;
+                Console.WriteLine(exception.InnerException);
                 break;
         }
     }

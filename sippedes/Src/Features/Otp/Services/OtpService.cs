@@ -1,5 +1,5 @@
-﻿using livecode_net_advanced.Commons.Utils;
-using sib_api_v3_sdk.Model;
+﻿using sib_api_v3_sdk.Model;
+using sippedes.Commons.Utils;
 using sippedes.Cores.Exceptions;
 using sippedes.Cores.Repositories;
 using sippedes.Features.Mail.Services;
