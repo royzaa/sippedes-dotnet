@@ -12,6 +12,7 @@ using System.Text;
 using CorePush.Apple;
 using CorePush.Google;
 using Hangfire;
+using Hangfire.SqlServer;
 using sib_api_v3_sdk.Api;
 using sippedes.Cores.Model;
 using sippedes.Features.PushNotification.Services;
@@ -60,11 +61,9 @@ public static class ConfigServiceCollectionExtension
         services.Configure<AwsS3ConfigurationModel>(appAwsS3SettingSection);
 
         //HangfireScheduler
-        services.AddHangfire(x =>
-            x.UseSqlServerStorage(
-                $@"Data Source={config.GetConnectionString("DefaultConnection")};Initial Catalog=hangfire;Integrated Security=True;Pooling=False"));
+        services.AddHangfire(x => x.UseSqlServerStorage(
+            $@"Data Source={config.GetConnectionString("HangfireConnection")};Pooling=False"));
         services.AddHangfireServer();
-
 
         services.AddAuthentication(options =>
         {
