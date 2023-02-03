@@ -16,7 +16,9 @@ public class AppDbContext : DbContext
     public DbSet<Letter> Letters => Set<Letter>();
     public DbSet<LetterCategory> LetterCategories => Set<LetterCategory>();
     public DbSet<TrackingStatus> TrackingStatus => Set<TrackingStatus>();
-    
+    public DbSet<Legalized> Legalizeds => Set<Legalized>();
+    public DbSet<WitnessSignature> WitnessSignatures => Set<WitnessSignature>();
+
 
     protected AppDbContext()
     {

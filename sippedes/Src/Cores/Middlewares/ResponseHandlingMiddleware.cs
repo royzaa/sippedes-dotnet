@@ -1,5 +1,4 @@
 using System.Net;
-using livecode_net_advanced.Cores.Dto;
 using Microsoft.IdentityModel.Tokens;
 using sippedes.Cores.Dto;
 using sippedes.Cores.Exceptions;
@@ -23,6 +22,7 @@ public class ResponseHandlingMiddleware : IMiddleware
         {
             await next.Invoke(context);
         }
+        
         catch (Exception e)
         {
             HandleExceptionAsync(context, e);
