@@ -14,6 +14,7 @@ using CorePush.Google;
 using sib_api_v3_sdk.Api;
 using sippedes.Cores.Model;
 using sippedes.Features.PushNotification.Services;
+using sippedes.Features.Upload.Services;
 
 namespace sippedes.Cores.Extensions;
 
@@ -33,6 +34,7 @@ public static class ConfigServiceCollectionExtension
         services.AddTransient<IAuthService, AuthService>();
         services.AddTransient<ICivilDataService, CivilDataService>();
         services.AddTransient<INotificationService, NotificationService>();
+        services.AddTransient<IUploadService, UploadService>();
 
         // HttpClient
         services.AddHttpClient<FcmSender>();
@@ -47,9 +49,12 @@ public static class ConfigServiceCollectionExtension
         services.AddSingleton<ResponseHandlingMiddleware>();
         
         // Configure strongly typed settings objects
-        var appSettingsSection = config.GetSection("FcmNotification");
-        services.Configure<FcmConfigurationModel>(appSettingsSection);
-
+        var appFcmSettingsSection = config.GetSection("FcmNotification");
+        services.Configure<FcmConfigurationModel>(appFcmSettingsSection);
+        var appAwsS3SettingSection = config.GetSection("AwsS3");
+        services.Configure<AwsS3ConfigurationModel>(appAwsS3SettingSection);
+        
+        
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
