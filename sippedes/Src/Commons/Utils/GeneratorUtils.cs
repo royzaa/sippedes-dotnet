@@ -1,6 +1,6 @@
 ﻿using sippedes.Cores.Extensions;
 
-namespace livecode_net_advanced.Commons.Utils;
+namespace sippedes.Commons.Utils;
 
 public static class GeneratorUtils
 {
