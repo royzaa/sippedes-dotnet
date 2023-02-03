@@ -11,6 +11,7 @@ using sippedes.Features.Auth.Services;
 using System.Text;
 using CorePush.Apple;
 using CorePush.Google;
+using Hangfire;
 using sib_api_v3_sdk.Api;
 using sippedes.Cores.Model;
 using sippedes.Features.PushNotification.Services;
@@ -48,17 +49,23 @@ public static class ConfigServiceCollectionExtension
         // Repository
         services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
         services.AddTransient<IPersistence, DbPersistence>();
-        
+
         // Middleware
         services.AddSingleton<ResponseHandlingMiddleware>();
-        
+
         // Configure strongly typed settings objects
         var appFcmSettingsSection = config.GetSection("FcmNotification");
         services.Configure<FcmConfigurationModel>(appFcmSettingsSection);
         var appAwsS3SettingSection = config.GetSection("AwsS3");
         services.Configure<AwsS3ConfigurationModel>(appAwsS3SettingSection);
-        
-        
+
+        //HangfireScheduler
+        services.AddHangfire(x =>
+            x.UseSqlServerStorage(
+                $@"Data Source={config.GetConnectionString("DefaultConnection")};Initial Catalog=hangfire;Integrated Security=True;Pooling=False"));
+        services.AddHangfireServer();
+
+
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
