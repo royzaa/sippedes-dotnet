@@ -5,7 +5,7 @@ using sippedes.Cores.Repositories;
 using sippedes.Cores.Security;
 using sippedes.Features.Mail.Services;
 using sippedes.Features.Otp.Services;
-using sippedes.Src.Features.CivilDatas.Services;
+using sippedes.Features.CivilDatas.Services;
 using sippedes.Features.Admin.Services;
 using sippedes.Features.Auth.Services;
 using System.Text;
@@ -14,6 +14,7 @@ using CorePush.Google;
 using sib_api_v3_sdk.Api;
 using sippedes.Cores.Model;
 using sippedes.Features.PushNotification.Services;
+using sippedes.Features.Letters.Services;
 using sippedes.Features.Upload.Services;
 
 namespace sippedes.Cores.Extensions;
@@ -34,6 +35,9 @@ public static class ConfigServiceCollectionExtension
         services.AddTransient<IAuthService, AuthService>();
         services.AddTransient<ICivilDataService, CivilDataService>();
         services.AddTransient<INotificationService, NotificationService>();
+        services.AddScoped<ILetterService, LetterService>();
+        services.AddScoped<ITrackingStatusService, TrackingStatusService>();
+        services.AddScoped<ILetterCategoryService, LetterCategoryService>();
         services.AddTransient<IUploadService, UploadService>();
 
         // HttpClient

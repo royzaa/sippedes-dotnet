@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using sippedes.Commons.Constants;
 
 namespace sippedes.Cores.Entities
 {
@@ -9,7 +10,7 @@ namespace sippedes.Cores.Entities
         [Key, Column(name: "id")] public Guid Id { get; set; }
 
         [Column(name: "status"), Required]
-        public string Status { get; set; } = null!;
+        public EStatus Status { get; set; }
 
         public virtual ICollection<Letter>? Letters { get; set; }
     }
