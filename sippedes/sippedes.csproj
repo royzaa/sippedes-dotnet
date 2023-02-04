@@ -29,11 +29,18 @@
     <ItemGroup>
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
+        <DependentUpon>Dockerfile</DependentUpon>
       </Content>
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Src\Features\Mail\Dto" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="development.dockerignore">
+        <DependentUpon>development.Dockerfile</DependentUpon>
+      </None>
     </ItemGroup>
 
 </Project>

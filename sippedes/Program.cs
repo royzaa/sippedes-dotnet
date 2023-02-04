@@ -19,7 +19,7 @@ public class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(option =>
         {
-            option.SwaggerDoc("v1", new OpenApiInfo { Title = "SippedesApi", Version = "v1" });
+            option.SwaggerDoc("v1", new OpenApiInfo { Title = "Sippedes Api", Version = "v1" });
 
 
             option.AddSecurityDefinition(JwtAuthenticationDefaults.AuthenticationScheme,
@@ -59,13 +59,23 @@ public class Program
         var app = builder.Build();
 
 
-        if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
+        if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.RoutePrefix = "";
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sippedes API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sippedes API Dev");
+            });
+        }
+        
+        if (app.Environment.IsProduction())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.RoutePrefix = "";
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Sippedes API Prod");
             });
         }
 
