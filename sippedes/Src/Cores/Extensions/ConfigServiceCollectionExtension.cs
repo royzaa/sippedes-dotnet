@@ -10,6 +10,8 @@ using sippedes.Features.Admin.Services;
 using sippedes.Features.Auth.Services;
 using System.Text;
 using sib_api_v3_sdk.Api;
+using sippedes.Src.Features.LegalizedLetter.Services;
+using sippedes.Src.Features.WitnessSignatures.Services;
 
 namespace sippedes.Cores.Extensions;
 
@@ -28,6 +30,8 @@ public static class ConfigServiceCollectionExtension
         services.AddTransient<IAdminDataService, AdminDataService>();
         services.AddTransient<IAuthService, AuthService>();
         services.AddTransient<ICivilDataService, CivilDataService>();
+        services.AddTransient<ILegalizedLetterService, LegalizedLetterService>();
+        services.AddTransient<IWitnessSignatureService, WitnessSignatureService>();
 
         // Repository
         services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
