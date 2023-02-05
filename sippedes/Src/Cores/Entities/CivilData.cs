@@ -44,5 +44,6 @@ public class CivilData
     
     [Column(name: "religion")]
     public string Religion { get; set; }
+
     
 }
