@@ -18,6 +18,8 @@ using sippedes.Cores.Model;
 using sippedes.Features.PushNotification.Services;
 using sippedes.Features.Letters.Services;
 using sippedes.Features.Upload.Services;
+using sippedes.Src.Features.LegalizedLetter.Services;
+using sippedes.Src.Features.WitnessSignatures.Services;
 
 namespace sippedes.Cores.Extensions;
 
@@ -46,6 +48,8 @@ public static class ConfigServiceCollectionExtension
         services.AddHttpClient<FcmSender>();
         services.AddHttpClient<ApnSender>();
 
+        services.AddTransient<ILegalizedLetterService, LegalizedLetterService>();
+        services.AddTransient<IWitnessSignatureService, WitnessSignatureService>();
 
         // Repository
         services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
