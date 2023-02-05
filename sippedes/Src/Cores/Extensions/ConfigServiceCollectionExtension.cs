@@ -20,6 +20,7 @@ using sippedes.Features.Letters.Services;
 using sippedes.Features.Upload.Services;
 using sippedes.Src.Features.LegalizedLetter.Services;
 using sippedes.Src.Features.WitnessSignatures.Services;
+using sippedes.Features.Users.Services;
 
 namespace sippedes.Cores.Extensions;
 
@@ -43,6 +44,7 @@ public static class ConfigServiceCollectionExtension
         services.AddScoped<ITrackingStatusService, TrackingStatusService>();
         services.AddScoped<ILetterCategoryService, LetterCategoryService>();
         services.AddTransient<IUploadService, UploadService>();
+        services.AddTransient<IUserCredentialService, UserCredentialService>();
 
         // HttpClient
         services.AddHttpClient<FcmSender>();

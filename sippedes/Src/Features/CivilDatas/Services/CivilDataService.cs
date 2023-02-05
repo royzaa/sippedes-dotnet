@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using sippedes.Cores.Dto;
 using sippedes.Cores.Entities;
-using sippedes.Cores.Exceptions;
+using sippedes.Cores.Exceptions;    
 using sippedes.Cores.Repositories;
 using sippedes.Features.CivilDatas.DTO;
 using sippedes.Features.CivilDatas.Services;
@@ -111,6 +111,7 @@ namespace sippedes.Features.CivilDatas.Services
             {
                 var civilData = await _civilRepository.Find(civil => civil.NIK.Equals(id));
                 if (civilData is null) throw new NotFoundException("NIK Not Found");
+                
 
                 CivilDataResponse response = new()
                 {
