@@ -46,9 +46,9 @@ public class NotificationService : INotificationService
             HttpClient httpClient = new HttpClient();
 
             string authorizationKey = string.Format("key={0}", settings.ServerKey);
-            
+
             string? deviceToken = (await GetLastUserDeviceTokenNotification(userId: Guid.Parse(notificationModel.UserId ?? "")))?.DeviceToken;
-            
+
             if (deviceToken is null)
             {
                 deviceToken = notificationModel.DeviceToken;
@@ -95,23 +95,23 @@ public class NotificationService : INotificationService
 
     private async Task<DeviceTokenNotification> CreateDeviceNotification(NotificationDto notificationDto)
     {
-      var res = await _persistence.ExecuteTransactionAsync( async  () =>
-           {
-               var entity = await _repository.Save(new DeviceTokenNotification
-               {
-                   UserCredentialId = Guid.Parse(notificationDto.UserId),
-                   DeviceToken = notificationDto.DeviceToken,
-                   Title = notificationDto.Title,
-                   Body = notificationDto.Body
-               });
+        var res = await _persistence.ExecuteTransactionAsync(async () =>
+        {
+            var entity = await _repository.Save(new DeviceTokenNotification
+            {
+                UserCredentialId = Guid.Parse(notificationDto.UserId),
+                DeviceToken = notificationDto.DeviceToken,
+                Title = notificationDto.Title,
+                Body = notificationDto.Body
+            });
 
-               await _persistence.SaveChangesAsync();
+            await _persistence.SaveChangesAsync();
 
-               return entity;
-           }
-        );
+            return entity;
+        }
+          );
 
-      return res;
+        return res;
     }
 
     public async Task<List<NotificationResponseDto>> GetAllNotifications()

@@ -10,7 +10,6 @@ namespace sippedes.Cores.Entities
 
         [Column(name: "category"), Required]
         public string Category { get; set; } = null!;
-
         //public virtual ICollection<Letter>? Letters { get; set; }
     }
 }

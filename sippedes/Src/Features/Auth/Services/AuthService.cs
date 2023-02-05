@@ -1,4 +1,4 @@
-﻿using BCrypt.Net;
+﻿    using BCrypt.Net;
 using sippedes.Commons.Constants;
 using sippedes.Cores.Entities;
 using sippedes.Cores.Exceptions;
