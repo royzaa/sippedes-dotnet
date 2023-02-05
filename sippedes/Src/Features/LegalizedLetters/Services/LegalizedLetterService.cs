@@ -4,7 +4,6 @@ using sippedes.Cores.Entities;
 using sippedes.Cores.Exceptions;
 using sippedes.Cores.Repositories;
 using sippedes.Src.Cores.Entities;
-using sippedes.Src.Features.CivilDatas.DTO;
 using sippedes.Src.Features.LegalizedLetter.DTO;
 
 namespace sippedes.Src.Features.LegalizedLetter.Services

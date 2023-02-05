@@ -1,5 +1,5 @@
 ﻿using sippedes.Cores.Dto;
-using sippedes.Src.Cores.Entities;
+using sippedes.Cores.Entities;
 using sippedes.Src.Features.WitnessSignatures.DTO;
 
 namespace sippedes.Src.Features.WitnessSignatures.Services

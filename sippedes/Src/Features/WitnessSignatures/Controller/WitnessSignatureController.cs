@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using sippedes.Cores.Controller;
-using sippedes.Src.Cores.Entities;
+using sippedes.Cores.Entities;
 using sippedes.Src.Features.WitnessSignatures.Services;
 
 namespace sippedes.Src.Features.WitnessSignatures.Controller
