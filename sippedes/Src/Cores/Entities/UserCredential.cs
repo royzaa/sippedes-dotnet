@@ -22,6 +22,9 @@ public class UserCredential
 
     [Column(name: "civil_data_id")]
     public string? CivilDataId { get; set; }
+    
+    [Column(name: "is_deleted")]
+    public int IsDeleted { get; set; }
 
     public virtual CivilData? CivilData { get; set; }
     public virtual Role Role { get; set; }

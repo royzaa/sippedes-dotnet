@@ -29,6 +29,7 @@ public class JwtUtils : IJwtUtils
             IssuedAt = DateTime.Now,
             Subject = new ClaimsIdentity(new List<Claim>
             {
+                new (ClaimTypes.PrimarySid, credential.Id.ToString()),
                 new (ClaimTypes.Email, credential.Email),
                 new (ClaimTypes.Role, credential.Role.ERole.ToString())
             }),

@@ -69,7 +69,7 @@ namespace sippedes.Features.Auth.Services
                 await _adminDataService.CreateAdminData(new AdminData
                 {
                     FullName = request.FullName,
-                    IsActive = 1,
+                    IsActive = 0,
                     UserCredential = saveUser
                 });
 
