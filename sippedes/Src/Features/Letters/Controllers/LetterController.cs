@@ -61,40 +61,35 @@ namespace sippedes.Features.Letters.Controllers
         [HttpGet("bussiness-evidence/{id}")]
         public async Task<IActionResult> GetBussinessEvidenceById(string id)
         {
-            var emails = User.Claims.FirstOrDefault(claim => claim.Type.Equals(ClaimTypes.Email))?.Value;
-            var letter = await _letterService.GetBussinessEvidenceLetterById(id, emails);
+            var letter = await _letterService.GetBussinessEvidenceLetterById(id);
             return Success(letter);
         }
 
         [HttpGet("police-record/{id}")]
         public async Task<IActionResult> GetPoliceRecordById(string id)
         {
-            var emails = User.Claims.FirstOrDefault(claim => claim.Type.Equals(ClaimTypes.Email))?.Value;
-            var letter = await _letterService.GetPoliceRecordLetterById(id, emails);
+            var letter = await _letterService.GetPoliceRecordLetterById(id);
             return Success(letter);
         }
 
         [HttpPut("bussiness-evidence/{id}")]
         public async Task<IActionResult> UpdateBussinessEvidenceLetter([FromBody] BussinessEvidenceLetterRequest request, string id)
         {
-            var emails = User.Claims.FirstOrDefault(claim => claim.Type.Equals(ClaimTypes.Email))?.Value;
-            var letterData = await _letterService.UpdateBussinessEvidenceLetter(request, id, emails);
+            var letterData = await _letterService.UpdateBussinessEvidenceLetter(request, id);
             return Success(letterData);
         }
 
         [HttpPut("police-record/{id}")]
         public async Task<IActionResult> UpdatePoliceRecordLetter([FromBody] PoliceRecordLetterRequest request, string id)
         {
-            var emails = User.Claims.FirstOrDefault(claim => claim.Type.Equals(ClaimTypes.Email))?.Value;
-            var letterData = await _letterService.UpdatePoliceRecordLetter(request, id, emails);
+            var letterData = await _letterService.UpdatePoliceRecordLetter(request, id);
             return Success(letterData);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            var emails = User.Claims.FirstOrDefault(claim => claim.Type.Equals(ClaimTypes.Email))?.Value;
-            await _letterService.Delete(id, emails);
+            await _letterService.Delete(id);
             CommonResponse<string?> response = new()
             {
                 StatusCode = 200,
