@@ -194,20 +194,17 @@ namespace sippedes.Features.Letters.Services
             return pageResponse;
         }
 
-        public async Task<BussinessEvidenceLetterResponse> GetBussinessEvidenceLetterById(string id, string email)
+        public async Task<BussinessEvidenceLetterResponse> GetBussinessEvidenceLetterById(string id)
         {
             try
             {
                 var letterData = await _repository.Find(
                     let => let.Id.Equals(Guid.Parse(id)),
-                    includes: new string[] { nameof(Letter.LetterCategory), nameof(Letter.TrackingStatus), nameof(Letter.UserCredential) }
+                    includes: new string[] { nameof(Letter.LetterCategory), nameof(Letter.TrackingStatus) }
                     );
 
                 if (letterData is null) throw new NotFoundException("Id Not Found");
                 if (letterData.LetterCategory.Category != "Keterangan Usaha") throw new NotFoundException("Not Found");
-
-                var user = letterData.UserCredential.Email.Equals(email);
-                if (user is false) throw new NotFoundException("Not Found");
 
                 BussinessEvidenceLetterResponse response = new()
                 {
@@ -230,20 +227,17 @@ namespace sippedes.Features.Letters.Services
             }
         }
 
-        public async Task<PoliceRecordLetterResponse> GetPoliceRecordLetterById(string id, string email)
+        public async Task<PoliceRecordLetterResponse> GetPoliceRecordLetterById(string id)
         {
             try
             {
                 var letterData = await _repository.Find(
                     let => let.Id.Equals(Guid.Parse(id)),
-                    includes: new string[] { nameof(Letter.LetterCategory), nameof(Letter.TrackingStatus), nameof(Letter.UserCredential) }
+                    includes: new string[] { nameof(Letter.LetterCategory), nameof(Letter.TrackingStatus) }
                     );
 
                 if (letterData is null) throw new NotFoundException("Id Not Found");
                 if (letterData.LetterCategory.Category != "Pengantar SKCK") throw new NotFoundException("Not Found");
-
-                var user = letterData.UserCredential.Email.Equals(email);
-                if (user is false) throw new NotFoundException("Not Found");
 
                 PoliceRecordLetterResponse response = new()
                 {
@@ -270,20 +264,17 @@ namespace sippedes.Features.Letters.Services
         }
 
 
-        public async Task<BussinessEvidenceLetterResponse> UpdateBussinessEvidenceLetter(BussinessEvidenceLetterRequest request, string id, string email)
+        public async Task<BussinessEvidenceLetterResponse> UpdateBussinessEvidenceLetter(BussinessEvidenceLetterRequest request, string id)
         {
             var letterData = await _repository.Find(
                     let => let.Id.Equals(Guid.Parse(id)),
-                    includes: new string[] { nameof(Letter.LetterCategory), nameof(Letter.TrackingStatus), nameof(Letter.UserCredential) }
+                    includes: new string[] { nameof(Letter.LetterCategory), nameof(Letter.TrackingStatus) }
                     );
 
             if (letterData is null) throw new NotFoundException("Id Not Found");
 
             var category = letterData.LetterCategory.Category.Equals("Keterangan Usaha");
-            if (category is false) throw new NotFoundException("Not Found 1");
-
-            var user = letterData.UserCredential.Email.Equals(email);
-            if (user is false) throw new NotFoundException("Not Found 2");
+            if (category is false) throw new NotFoundException("Not Found ");
 
             var status = letterData.TrackingStatus.Status.Equals(EStatus.SENT);
             if (status is false) throw new NotFoundException($"Data cannot be changed. Your letter has been {letterData.TrackingStatus.Status.ToString()}");
@@ -315,7 +306,7 @@ namespace sippedes.Features.Letters.Services
         {
             var letterData = await _repository.Find(
                     let => let.Id.Equals(Guid.Parse(id)),
-                    includes: new string[] { nameof(Letter.LetterCategory), nameof(Letter.TrackingStatus), nameof(Letter.UserCredential) }
+                    includes: new string[] { nameof(Letter.LetterCategory), nameof(Letter.TrackingStatus)}
                     );
 
             if (letterData is null) throw new NotFoundException("Id Not Found");
@@ -330,7 +321,7 @@ namespace sippedes.Features.Letters.Services
         {
             var letterData = await _repository.Find(
                     let => let.Id.Equals(Guid.Parse(id)),
-                    includes: new string[] { nameof(Letter.LetterCategory), nameof(Letter.TrackingStatus), nameof(Letter.UserCredential) }
+                    includes: new string[] { nameof(Letter.LetterCategory), nameof(Letter.TrackingStatus)}
                     );
 
             if (letterData is null) throw new NotFoundException("Id Not Found");
@@ -341,20 +332,17 @@ namespace sippedes.Features.Letters.Services
             await _persistence.SaveChangesAsync();
         }
 
-        public async Task<PoliceRecordLetterResponse> UpdatePoliceRecordLetter(PoliceRecordLetterRequest request, string id, string email)
+        public async Task<PoliceRecordLetterResponse> UpdatePoliceRecordLetter(PoliceRecordLetterRequest request, string id)
         {
             var letterData = await _repository.Find(
                     let => let.Id.Equals(Guid.Parse(id)),
-                    includes: new string[] { nameof(Letter.LetterCategory), nameof(Letter.TrackingStatus), nameof(Letter.UserCredential) }
+                    includes: new string[] { nameof(Letter.LetterCategory), nameof(Letter.TrackingStatus) }
                     );
 
             if (letterData is null) throw new NotFoundException("Id Not Found");
 
             var category = letterData.LetterCategory.Category.Equals("Pengantar SKCK");
-            if (category is false) throw new NotFoundException("Not Found 1");
-
-            var user = letterData.UserCredential.Email.Equals(email);
-            if (user is false) throw new NotFoundException("Not Found 2");
+            if (category is false) throw new NotFoundException("Not Found");
 
             var status = letterData.TrackingStatus.Status.Equals(EStatus.SENT);
             if (status is false) throw new NotFoundException($"Data cannot be changed. Your letter has been {letterData.TrackingStatus.Status.ToString()}");
@@ -382,19 +370,11 @@ namespace sippedes.Features.Letters.Services
             return response;
         }
 
-        public async Task Delete(string id, string email)
+        public async Task Delete(string id)
         {
             var letterData = await _repository.Find(
-                    let => let.Id.Equals(Guid.Parse(id)),
-                    includes: new string[] {nameof(Letter.TrackingStatus), nameof(Letter.UserCredential) }
-                    );
+                    let => let.Id.Equals(Guid.Parse(id)));
             if (letterData is null) throw new NotFoundException("Id Not Found");
-
-            var user = letterData.UserCredential.Email.Equals(email);
-            if (user is false) throw new NotFoundException("Not Found");
-
-            var status = letterData.TrackingStatus.Status.Equals(EStatus.SENT);
-            if (status is false) throw new NotFoundException($"Data cannot be deleted. Your letter has been {letterData.TrackingStatus.Status.ToString()}");
 
             _repository.Delete(letterData);
             await _persistence.SaveChangesAsync();

@@ -9,18 +9,18 @@ namespace sippedes.Features.Letters.Services
     public interface ILetterService
     {
         Task<BussinessEvidenceLetterResponse> CreateBussinessEvidenceLetter(BussinessEvidenceLetterRequest request, string email);
-        Task<BussinessEvidenceLetterResponse> UpdateBussinessEvidenceLetter(BussinessEvidenceLetterRequest request, string id, string email);
+        Task<BussinessEvidenceLetterResponse> UpdateBussinessEvidenceLetter(BussinessEvidenceLetterRequest request, string id);
         Task<PageResponse<BussinessEvidenceLetterResponse>> GetAllBussinessEvidenceLetter(int page, int size);
-        Task<BussinessEvidenceLetterResponse> GetBussinessEvidenceLetterById(string id, string email);
+        Task<BussinessEvidenceLetterResponse> GetBussinessEvidenceLetterById(string id);
 
         Task UpdateLetterTrackingToOnProcess(string id);
         Task UpdateLetterTrackingToComplete(string id);
-        Task Delete(string id, string email);
+        Task Delete(string id);
 
 
         Task<PoliceRecordLetterResponse> CreatePoliceRecordLetter(PoliceRecordLetterRequest request, string email);
-        Task<PoliceRecordLetterResponse> UpdatePoliceRecordLetter(PoliceRecordLetterRequest request, string id, string email);
+        Task<PoliceRecordLetterResponse> UpdatePoliceRecordLetter(PoliceRecordLetterRequest request, string id);
         Task<PageResponse<PoliceRecordLetterResponse>> GetAllPoliceRecordLetter(int page, int size);
-        Task<PoliceRecordLetterResponse> GetPoliceRecordLetterById(string id, string email);
+        Task<PoliceRecordLetterResponse> GetPoliceRecordLetterById(string id);
     }
 }
