@@ -24,6 +24,7 @@ namespace sippedes.Features.CivilDatas.Services
         {
             var civilData = await _civilRepository.Find(
                 civil => civil.NIK.Equals(payload.NIK));
+            if (payload.NIK.Length < 16) throw new Exception("Minimum Length of NIK is 16");
             if (civilData != null) throw new Exception("NIK is Already Exist");
             try
             {
@@ -68,13 +69,13 @@ namespace sippedes.Features.CivilDatas.Services
 
         }
 
-        public async Task<PageResponse<CivilDataResponse>> GetAllCivil(string? id, int page, int size)
+        public async Task<PageResponse<CivilDataResponse>> GetAllCivil(int page, int size)
         {
             var civilData = await _civilRepository.FindAll(
-                criteria: c => EF.Functions.Like(c.NIK, $"{id}"),
+                criteria: c => true,
                 page: page,
                 size: size
-                );
+                ) ;
 
 
             var civilDataResponse = civilData.Select(data => new CivilDataResponse

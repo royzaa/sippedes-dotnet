@@ -64,10 +64,10 @@ namespace sippedes.Src.Features.LegalizedLetter.Services
             await _persistence.SaveChangesAsync();
         }
 
-        public async Task<PageResponse<LegalizedLetterResponse>> GetAllLegalizedLetter(string? id, int page, int size)
+        public async Task<PageResponse<LegalizedLetterResponse>> GetAllLegalizedLetter(int page, int size)
         {
             var result = await _legalRepository.FindAll(
-                criteria: letter => EF.Functions.Like(letter.LegalizedId.ToString(), $"{id}"),
+                criteria: letter => true,
                 page: page,
                 size: size
                 );

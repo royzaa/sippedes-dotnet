@@ -29,9 +29,9 @@ namespace sippedes.Src.Features.LegalizedLetter.Controller
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllLegalizedLetter([FromQuery] string? id, [FromQuery] int page = 1, [FromQuery ]int size = 5)
+        public async Task<IActionResult> GetAllLegalizedLetter([FromQuery] int page = 1, [FromQuery ]int size = 5)
         {
-            var result = await _legalService.GetAllLegalizedLetter(id, page, size);
+            var result = await _legalService.GetAllLegalizedLetter(page, size);
             return Success(result);
         }
 

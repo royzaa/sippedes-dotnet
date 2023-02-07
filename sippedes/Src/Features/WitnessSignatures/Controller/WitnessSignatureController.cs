@@ -19,7 +19,7 @@ namespace sippedes.Src.Features.WitnessSignatures.Controller
         public async Task<IActionResult> CreateNewWitnessSignature([FromBody] WitnessSignature request)
         {
             var createResponse = await _signatureService.CreateNewWitnessSignature(request);
-            return Created("/api/witness-signature", createResponse);
+            return Created("/api/witness-signature", Success(createResponse));
         }
 
         [HttpGet("{id}")]
@@ -30,9 +30,9 @@ namespace sippedes.Src.Features.WitnessSignatures.Controller
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllWitnessSignature([FromQuery] string? name, [FromQuery] int page, [FromQuery] int size)
+        public async Task<IActionResult> GetAllWitnessSignature([FromQuery] int page = 1, [FromQuery] int size = 5)
         {
-            var witnessData = await _signatureService.GetAllWitnessSignature(name, page, size);
+            var witnessData = await _signatureService.GetAllWitnessSignature(page, size);
             return Success(witnessData);
         }
 

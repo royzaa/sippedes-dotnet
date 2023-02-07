@@ -9,7 +9,7 @@ namespace sippedes.Src.Features.LegalizedLetter.Services
     {
         Task<LegalizedLetterResponse> CreateNewLegalizedLetter(Legalized payload);
         Task<LegalizedLetterResponse> GetLegalizedLetterById(string id);
-        Task<PageResponse<LegalizedLetterResponse>> GetAllLegalizedLetter(string? id, int page, int size);
+        Task<PageResponse<LegalizedLetterResponse>> GetAllLegalizedLetter(int page, int size);
         Task<LegalizedLetterResponse> Update(Letter payload);
         Task Delete(string id);
     }

@@ -55,10 +55,10 @@ namespace sippedes.Src.Features.WitnessSignatures.Services
             await _persistence.SaveChangesAsync();
         }
 
-        public async Task<PageResponse<WitnessSignatureResponse>> GetAllWitnessSignature(string? name, int page, int size)
+        public async Task<PageResponse<WitnessSignatureResponse>> GetAllWitnessSignature(int page, int size)
         {
             var witnessData = await _witnessRepository.FindAll(
-                criteria: w => EF.Functions.Like(w.WitnessName, $"{name}"),
+                criteria: w => true,
                 page: page,
                 size: size
                 );
