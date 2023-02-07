@@ -1,4 +1,6 @@
-﻿
+
+
+using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using sippedes.Cores.Controller;
@@ -37,9 +39,9 @@ namespace sippedes.Src.Features.CivilDatas.Controller
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllCivil([FromQuery] string? id, [FromQuery]int page = 1, [FromQuery] int size = 5)
+        public async Task<IActionResult> GetAllCivil([FromQuery]int page = 1, [FromQuery] int size = 5)
         {
-            var civilData = await _civilService.GetAllCivil(id, page, size);
+            var civilData = await _civilService.GetAllCivil(page, size);
             return Success(civilData);
         }
 
