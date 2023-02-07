@@ -16,16 +16,12 @@ namespace sippedes.Features.Letters.Controllers
     public class LetterController : BaseController
     {
         private readonly ILetterService _letterService;
-        private readonly AppDbContext _appDbContext;
         private readonly IUserCredentialService _userCredentialService;
-        private readonly IRepository<Letter> _repository;
 
-        public LetterController(ILetterService letterService, AppDbContext appDbContext, IUserCredentialService userCredentialService, IRepository<Letter> repository)
+        public LetterController(ILetterService letterService, IUserCredentialService userCredentialService)
         {
             _letterService = letterService;
-            _appDbContext = appDbContext;
             _userCredentialService = userCredentialService;
-            _repository = repository;
         }
 
         [HttpPost("bussiness-evidence")]
