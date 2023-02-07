@@ -94,7 +94,7 @@ namespace sippedes.Features.Auth.Services
 
             var registerResponse = await _persistence.ExecuteTransactionAsync(async () =>
             {
-                var role = await _roleService.GetOrSave(ERole.Civilin);
+                var role = await _roleService.GetOrSave(ERole.Civilian);
 
                 var userCredential = new UserCredential
                 {
