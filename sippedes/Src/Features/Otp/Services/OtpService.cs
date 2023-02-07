@@ -6,6 +6,7 @@ using sippedes.Cores.Repositories;
 using sippedes.Features.CivilDatas.Services;
 using sippedes.Features.Mail.Services;
 using sippedes.Features.Otp.Dto;
+using sippedes.Features.Users.Services;
 using Task = System.Threading.Tasks.Task;
 
 namespace sippedes.Features.Otp.Services;
@@ -14,16 +15,16 @@ public class OtpService : IOtpService
 {
     private readonly IRepository<Cores.Entities.Otp> _repository;
     private readonly IMailService _mailService;
-    private readonly ICivilDataService _civilDataService;
     private readonly IPersistence _persistence;
+    private readonly IUserCredentialService _userCredentialService;
 
     public OtpService(IRepository<Cores.Entities.Otp> repository, IPersistence persistence, IMailService mailService,
-        ICivilDataService civilDataService)
+        ICivilDataService civilDataService, IUserCredentialService userCredentialService)
     {
         _repository = repository;
         _persistence = persistence;
         _mailService = mailService;
-        _civilDataService = civilDataService;
+        _userCredentialService = userCredentialService;
     }
 
     public async Task<CreateSmtpEmail> SendOtp(SendOtpReqDto payload)
@@ -34,7 +35,7 @@ public class OtpService : IOtpService
         {
             var otp = await _repository.Save(new Cores.Entities.Otp
             {
-                user_id = payload.UserId,
+                UserId = payload.UserId,
                 OtpCode = randomCode,
                 IsExpired = 0,
                 LastExpiration = DateTime.Now.AddMinutes(5),
@@ -45,7 +46,8 @@ public class OtpService : IOtpService
         });
 
         // TODO: 
-        // Get Civil Data by UserId
+        var user = await _userCredentialService.GetById(payload.UserId.ToString());
+        payload.Name = user.CivilData?.Fullname;
 
         BackgroundJob.Schedule(() => UpdateExpiredOtp(otpResult), DateTime.Now.AddMinutes(5));
 
@@ -64,6 +66,8 @@ public class OtpService : IOtpService
             {
                 Success = false
             };
+        var user = await _userCredentialService.GetById(payload.UserId);
+        await _userCredentialService.VerifyAccount(user);
         return new VerifyOtpResDto
         {
             Success = true
@@ -72,8 +76,7 @@ public class OtpService : IOtpService
 
     private async Task<Cores.Entities.Otp> GetValidOtp(VerifyOtpReqDto payload)
     {
-        var otp = await _repository.Find(otp => otp.IsExpired == 0 && otp.user_id.Equals(payload.UserId));
-
+        var otp = await _repository.Find(otp => otp.IsExpired == 0 && otp.UserId.Equals(Guid.Parse(payload.UserId)));
         if (otp is null)
         {
             throw new NotFoundException("otp expired/not match");
@@ -100,7 +103,7 @@ public class OtpService : IOtpService
             TemplateId = 1,
             Params = new
             {
-                // FNAME = "",
+                FIRSTNAME = payload.Name,
                 SMS = randomCode
             }
         });
