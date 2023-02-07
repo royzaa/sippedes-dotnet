@@ -35,7 +35,7 @@ public class OtpService : IOtpService
         {
             var otp = await _repository.Save(new Cores.Entities.Otp
             {
-                user_id = payload.UserId,
+                UserId = payload.UserId,
                 OtpCode = randomCode,
                 IsExpired = 0,
                 LastExpiration = DateTime.Now.AddMinutes(5),
@@ -48,8 +48,6 @@ public class OtpService : IOtpService
         // TODO: 
         var user = await _userCredentialService.GetById(payload.UserId.ToString());
         payload.Name = user.CivilData?.Fullname;
-
-        Console.WriteLine(user.CivilData?.Fullname);
 
         BackgroundJob.Schedule(() => UpdateExpiredOtp(otpResult), DateTime.Now.AddMinutes(5));
 
@@ -78,8 +76,7 @@ public class OtpService : IOtpService
 
     private async Task<Cores.Entities.Otp> GetValidOtp(VerifyOtpReqDto payload)
     {
-        var otp = await _repository.Find(otp => otp.IsExpired == 0 && otp.user_id.Equals(payload.UserId));
-
+        var otp = await _repository.Find(otp => otp.IsExpired == 0 && otp.UserId.Equals(Guid.Parse(payload.UserId)));
         if (otp is null)
         {
             throw new NotFoundException("otp expired/not match");

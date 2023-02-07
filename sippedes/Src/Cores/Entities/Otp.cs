@@ -8,7 +8,7 @@ public class Otp
 {
     [Key, Column(name: "id")] public Guid id { get; set; } 
     
-    [Column(name:"user_id"), Required] public Guid user_id { get; set; }
+    [Column(name:"user_id"), Required] public Guid UserId { get; set; }
     
     [Column(name:"otp_code")] public int OtpCode { get; set; }
     

@@ -26,6 +26,7 @@ public class OtpController : BaseController
         var guid = User.Claims.FirstOrDefault(claim => claim.Type.Equals(ClaimTypes.PrimarySid))?.Value;
         var email = User.Claims.FirstOrDefault(claim => claim.Type.Equals(ClaimTypes.Email))?.Value;
         payload.UserId = Guid.Parse(guid);
+        Console.WriteLine(payload.UserId);
         payload.Email = email;
         var result = await _otpService.SendOtp(payload);
 
