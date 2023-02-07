@@ -26,11 +26,11 @@ public class PdfService : IPdfService
         _jwtUtils = jwtUtils;
     }
 
-    public async Task<dynamic> CreateSkckPdf(SkckDto legalized)
+    public async Task<ApiResponse> CreateSkckPdf(SkckDto legalized)
     {
         var templateId = _pdfSecret.Value.TemplateId;
         var jsonEncode =
-            $"{{\"occupation\":\"{legalized.Occupation}\",\"signature\":\"{legalized.Signature}\",\"witnessName\":\"{legalized.WitnessName}\",\"no\":\"{legalized.No}\",\"religion\":\"{legalized.Religion}\",\"martialStatus\":\"{legalized.MartialStatus}\",\"name\":\"{legalized.Name}\",\"birthdate\":\"{legalized.BirthDate}\",\"nationality\":\"{legalized.Nationality}\",\"address\":\"{legalized.Address}\",\"job\":\"{legalized.Job}\",\"necessity\":\"{legalized.Necessity}\"}}";
+            $"{{\"date\":\"{legalized.Date}\",\"occupation\":\"{legalized.Occupation}\",\"signature\":\"{legalized.Signature}\",\"witnessName\":\"{legalized.WitnessName}\",\"no\":\"{legalized.No}\",\"religion\":\"{legalized.Religion}\",\"martialStatus\":\"{legalized.MartialStatus}\",\"name\":\"{legalized.Name}\",\"birthDate\":\"{legalized.BirthDate}\",\"nationality\":\"{legalized.Nationality}\",\"address\":\"{legalized.Address}\",\"job\":\"{legalized.Job}\",\"necessity\":\"{legalized.Necessity}\"}}";
         var body = new StringContent(
             jsonEncode,
             Encoding.UTF8,
@@ -62,6 +62,15 @@ public class PdfService : IPdfService
             Console.WriteLine(httpResponseMessage.StatusCode);
         }
 
-        return JsonObject.Parse(await httpResponseMessage.Content.ReadAsStringAsync());
+        return JsonObject.Parse(await httpResponseMessage.Content.ReadAsStringAsync()).Deserialize<ApiResponse>();
+    }
+
+    public async Task<Stream> DownloadPdf(SkckDto dto)
+    {
+        var res = await CreateSkckPdf(dto);
+
+        var byteData = await _httpClientFactory.CreateClient().GetStreamAsync(res.response);
+        
+        return byteData;
     }
 }

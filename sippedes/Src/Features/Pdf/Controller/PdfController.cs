@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Net;
+using System.Net.Mime;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using sippedes.Cores.Controller;
 using sippedes.Features.Pdf.Dto;
 using sippedes.Features.Pdf.Services;
 using sippedes.Src.Cores.Entities;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace sippedes.Features.Pdf.Controller;
 
@@ -23,6 +26,15 @@ public class PdfController : BaseController
     {
         var res = await _pdfService.CreateSkckPdf(legalized);
 
-        return res;
+        return Success(res);
+    }
+    [HttpPost("download")]
+    [Authorize(Roles = "Admin")]
+    [SwaggerResponse((int)HttpStatusCode.OK, "Download a file.", typeof(FileContentResult))]
+    public async Task<FileResult> DownloadPdf(SkckDto legalized)
+    {
+        var data = await _pdfService.DownloadPdf(legalized);
+        
+        return File(data, MediaTypeNames.Application.Pdf);
     }
 }

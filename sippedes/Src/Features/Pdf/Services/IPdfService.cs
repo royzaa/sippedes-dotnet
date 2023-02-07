@@ -5,5 +5,7 @@ namespace sippedes.Features.Pdf.Services;
 
 public interface IPdfService
 {
-    Task<dynamic> CreateSkckPdf(SkckDto legalized);
+    Task<ApiResponse> CreateSkckPdf(SkckDto legalized);
+
+    Task<Stream> DownloadPdf(SkckDto dto);
 }
