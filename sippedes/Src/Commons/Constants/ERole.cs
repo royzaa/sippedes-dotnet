@@ -3,5 +3,5 @@
 public enum ERole
 {
     Admin,
-    Civilin
+    Civilian
 }

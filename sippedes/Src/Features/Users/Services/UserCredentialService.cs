@@ -7,10 +7,12 @@ namespace sippedes.Features.Users.Services
     public class UserCredentialService : IUserCredentialService
     {
         private readonly IRepository<UserCredential> _repository;
+        private readonly IPersistence _persistence;
 
-        public UserCredentialService(IRepository<UserCredential> repository)
+        public UserCredentialService(IRepository<UserCredential> repository, IPersistence persistence)
         {
             _repository = repository;
+            _persistence = persistence;
         }
 
         public async Task<UserCredential> GetByEmail(string email)
@@ -26,6 +28,49 @@ namespace sippedes.Features.Users.Services
                 Console.WriteLine(ex);
                 throw;
             }
+        }
+
+        public async Task VerifyAccount(UserCredential user)
+        {
+            user.IsVerifed = 1;
+            await _persistence.ExecuteTransactionAsync(async () =>
+            {
+                var res = _repository.Update(user);
+                await _persistence.SaveChangesAsync();
+
+                return res;
+            });
+        }
+
+        public async Task<UserCredential> GetById(string id)
+        {
+            try
+            {
+                var users = await _repository.Find(users => users.Id.Equals(Guid.Parse(id)),
+                    includes: new[] { "CivilData" });
+                if (users is null) throw new NotFoundException();
+                return users;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                throw;
+            }
+        }
+
+        public async Task DeleteAccount(string id)
+        {
+            var user = await GetById(id);
+
+            user.IsDeleted = 1;
+            user.Email = BCrypt.Net.BCrypt.HashString(user.Email);
+
+            await _persistence.ExecuteTransactionAsync(async () =>
+            {
+                var res = _repository.Update(user);
+                await _persistence.SaveChangesAsync();
+                return res;
+            });
         }
     }
 }

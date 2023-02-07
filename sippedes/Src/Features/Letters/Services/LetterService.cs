@@ -99,7 +99,7 @@ namespace sippedes.Features.Letters.Services
                     Address = civil.Address,
                     Job = request.Job,
                     Nationality = "Negara Kebangsaan Republik Indonesia",
-                    Necessity = request.Nescessity,
+                    Necessity = request.Necessity,
                     MaritalStatus = request.MaritalStatus,
                     Religion = civil.Religion,
                     TrackingStatus = status,
@@ -117,7 +117,7 @@ namespace sippedes.Features.Letters.Services
                     Address = saveLetter.Address,
                     Job = saveLetter.Job,
                     Nationality = saveLetter.Nationality,
-                    Nescessity = saveLetter.Necessity,
+                    Necessity = saveLetter.Necessity,
                     MaritalStatus = saveLetter.MaritalStatus,
                     Religion = saveLetter.Religion,
                     Status = saveLetter.TrackingStatus.Status.ToString(),
@@ -178,7 +178,7 @@ namespace sippedes.Features.Letters.Services
                 Address = data.Address,
                 Job = data.Job,
                 Nationality = data.Nationality,
-                Nescessity = data.Necessity,
+                Necessity = data.Necessity,
                 MaritalStatus = data.MaritalStatus,
                 Religion = data.Religion,
                 Status = data.TrackingStatus.Status.ToString(),
@@ -249,7 +249,7 @@ namespace sippedes.Features.Letters.Services
                     Address = letterData.Address,
                     Job = letterData.Job,
                     Nationality = letterData.Nationality,
-                    Nescessity = letterData.Necessity,
+                    Necessity = letterData.Necessity,
                     MaritalStatus = letterData.MaritalStatus,
                     Religion = letterData.Religion,
                     Status = letterData.TrackingStatus.Status.ToString(),
@@ -350,7 +350,7 @@ namespace sippedes.Features.Letters.Services
             if (status is false) throw new NotFoundException($"Data cannot be changed. Your letter has been {letterData.TrackingStatus.Status.ToString()}");
 
             letterData.Job = request.Job;
-            letterData.Necessity = request.Nescessity;
+            letterData.Necessity = request.Necessity;
             letterData.MaritalStatus = request.MaritalStatus;
             await _persistence.SaveChangesAsync();
 
@@ -362,7 +362,7 @@ namespace sippedes.Features.Letters.Services
                 Address = letterData.Address,
                 Job = letterData.Job,
                 Nationality = letterData.Nationality,
-                Nescessity = letterData.Necessity,
+                Necessity = letterData.Necessity,
                 MaritalStatus = letterData.MaritalStatus,
                 Religion = letterData.Religion,
                 Status = letterData.TrackingStatus.Status.ToString(),

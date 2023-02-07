@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using sippedes.Cores.Entities;
+using sippedes.Src.Cores.Entities;
 
 namespace sippedes.Cores.Database;
 
@@ -17,6 +18,10 @@ public class AppDbContext : DbContext
     public DbSet<LetterCategory> LetterCategories => Set<LetterCategory>();
     public DbSet<TrackingStatus> TrackingStatus => Set<TrackingStatus>();
     
+    public DbSet<Legalized> Legalizeds { get; set; }
+    
+    public DbSet<WitnessSignature> WitnessSignatures { get; set; }
+
 
     protected AppDbContext()
     {

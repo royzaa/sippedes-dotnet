@@ -12,6 +12,8 @@
         <PackageReference Include="AWSSDK.S3" Version="3.7.103.1" />
         <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
         <PackageReference Include="CorePush" Version="3.1.1" />
+        <PackageReference Include="Hangfire.AspNetCore" Version="1.7.33" />
+        <PackageReference Include="Hangfire.SqlServer" Version="1.7.33" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.0" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.2" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.2" />
@@ -22,16 +24,24 @@
         <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
         <PackageReference Include="sib_api_v3_sdk" Version="3.3.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
     </ItemGroup>
 
     <ItemGroup>
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
+        <DependentUpon>Dockerfile</DependentUpon>
       </Content>
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Src\Features\Mail\Dto" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="development.dockerignore">
+        <DependentUpon>development.Dockerfile</DependentUpon>
+      </None>
     </ItemGroup>
 
 </Project>

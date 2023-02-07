@@ -1,9 +1,13 @@
-﻿using sib_api_v3_sdk.Model;
+﻿using Hangfire;
+using sib_api_v3_sdk.Model;
 using sippedes.Commons.Utils;
 using sippedes.Cores.Exceptions;
 using sippedes.Cores.Repositories;
+using sippedes.Features.CivilDatas.Services;
 using sippedes.Features.Mail.Services;
 using sippedes.Features.Otp.Dto;
+using sippedes.Features.Users.Services;
+using Task = System.Threading.Tasks.Task;
 
 namespace sippedes.Features.Otp.Services;
 
@@ -12,26 +16,29 @@ public class OtpService : IOtpService
     private readonly IRepository<Cores.Entities.Otp> _repository;
     private readonly IMailService _mailService;
     private readonly IPersistence _persistence;
+    private readonly IUserCredentialService _userCredentialService;
 
-    public OtpService(IRepository<Cores.Entities.Otp> repository, IPersistence persistence, IMailService mailService)
+    public OtpService(IRepository<Cores.Entities.Otp> repository, IPersistence persistence, IMailService mailService,
+        ICivilDataService civilDataService, IUserCredentialService userCredentialService)
     {
         _repository = repository;
         _persistence = persistence;
         _mailService = mailService;
+        _userCredentialService = userCredentialService;
     }
 
     public async Task<CreateSmtpEmail> SendOtp(SendOtpReqDto payload)
     {
-        var randomCode = GeneratorUtils.GenerateRondomNumeric();
+        var randomCode = GeneratorUtils.GenerateRandomNumeric();
 
         var otpResult = await _persistence.ExecuteTransactionAsync<Cores.Entities.Otp>(async () =>
         {
             var otp = await _repository.Save(new Cores.Entities.Otp
             {
-                user_id = payload.UserId,
+                UserId = payload.UserId,
                 OtpCode = randomCode,
                 IsExpired = 0,
-                LastExpiration = DateTime.Now.AddMinutes(10),
+                LastExpiration = DateTime.Now.AddMinutes(5),
                 CreatedAt = DateTime.Now
             });
             await _persistence.SaveChangesAsync();
@@ -39,7 +46,10 @@ public class OtpService : IOtpService
         });
 
         // TODO: 
-        // Get Civil Data by UserId
+        var user = await _userCredentialService.GetById(payload.UserId.ToString());
+        payload.Name = user.CivilData?.Fullname;
+
+        BackgroundJob.Schedule(() => UpdateExpiredOtp(otpResult), DateTime.Now.AddMinutes(5));
 
         var result = await SendMailOtp(payload, randomCode);
 
@@ -50,11 +60,14 @@ public class OtpService : IOtpService
     {
         var validOtp = await GetValidOtp(payload);
 
+
         if (validOtp.OtpCode != payload.OtpCode)
             return new VerifyOtpResDto
             {
                 Success = false
             };
+        var user = await _userCredentialService.GetById(payload.UserId);
+        await _userCredentialService.VerifyAccount(user);
         return new VerifyOtpResDto
         {
             Success = true
@@ -63,11 +76,10 @@ public class OtpService : IOtpService
 
     private async Task<Cores.Entities.Otp> GetValidOtp(VerifyOtpReqDto payload)
     {
-        var otp = await _repository.Find(otp => otp.IsExpired == 0 && otp.user_id.Equals(payload.UserId));
-
+        var otp = await _repository.Find(otp => otp.IsExpired == 0 && otp.UserId.Equals(Guid.Parse(payload.UserId)));
         if (otp is null)
         {
-            throw new NotFoundException("verifikasi otp gagal");
+            throw new NotFoundException("otp expired/not match");
         }
 
         return otp;
@@ -91,9 +103,21 @@ public class OtpService : IOtpService
             TemplateId = 1,
             Params = new
             {
-                // FNAME = "",
+                FIRSTNAME = payload.Name,
                 SMS = randomCode
             }
+        });
+    }
+
+    public async Task UpdateExpiredOtp(Cores.Entities.Otp otp)
+    {
+        otp.IsExpired = 1;
+        await _persistence.ExecuteTransactionAsync(async () =>
+        {
+            var expiredOtp = _repository.Update(otp);
+            await _persistence.SaveChangesAsync();
+
+            return expiredOtp;
         });
     }
 }

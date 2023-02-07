@@ -116,7 +116,7 @@ public class NotificationService : INotificationService
 
     public async Task<List<NotificationResponseDto>> GetAllNotifications()
     {
-        List<DeviceTokenNotification>? notifications = (await _repository.FindAll()).ToList();
+        List<DeviceTokenNotification>? notifications = (await _repository.FindAll(notification => true)).ToList();
 
         List<NotificationResponseDto> res = notifications.Select(notification => new NotificationResponseDto
         {

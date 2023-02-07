@@ -11,11 +11,16 @@ using sippedes.Features.Auth.Services;
 using System.Text;
 using CorePush.Apple;
 using CorePush.Google;
+using Hangfire;
+using Hangfire.SqlServer;
 using sib_api_v3_sdk.Api;
 using sippedes.Cores.Model;
 using sippedes.Features.PushNotification.Services;
 using sippedes.Features.Letters.Services;
+using sippedes.Features.Pdf.Services;
 using sippedes.Features.Upload.Services;
+using sippedes.Src.Features.LegalizedLetter.Services;
+using sippedes.Src.Features.WitnessSignatures.Services;
 using sippedes.Features.Users.Services;
 
 namespace sippedes.Cores.Extensions;
@@ -41,26 +46,36 @@ public static class ConfigServiceCollectionExtension
         services.AddScoped<ILetterCategoryService, LetterCategoryService>();
         services.AddTransient<IUploadService, UploadService>();
         services.AddTransient<IUserCredentialService, UserCredentialService>();
+        services.AddTransient<IPdfService, PdfService>();
 
         // HttpClient
         services.AddHttpClient<FcmSender>();
         services.AddHttpClient<ApnSender>();
+        services.AddHttpClient();
 
+        services.AddTransient<ILegalizedLetterService, LegalizedLetterService>();
+        services.AddTransient<IWitnessSignatureService, WitnessSignatureService>();
 
         // Repository
         services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
         services.AddTransient<IPersistence, DbPersistence>();
-        
+
         // Middleware
         services.AddSingleton<ResponseHandlingMiddleware>();
-        
+
         // Configure strongly typed settings objects
         var appFcmSettingsSection = config.GetSection("FcmNotification");
         services.Configure<FcmConfigurationModel>(appFcmSettingsSection);
         var appAwsS3SettingSection = config.GetSection("AwsS3");
         services.Configure<AwsS3ConfigurationModel>(appAwsS3SettingSection);
-        
-        
+        var pdfApiConf = config.GetSection("PdfApiConf");
+        services.Configure<PdfApiConf>(pdfApiConf);
+
+        //HangfireScheduler
+        services.AddHangfire(x => x.UseSqlServerStorage(
+            $@"Data Source={config.GetConnectionString("HangfireConnection")};Pooling=False"));
+        services.AddHangfireServer();
+
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

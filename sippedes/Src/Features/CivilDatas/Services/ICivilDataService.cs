@@ -8,7 +8,7 @@ namespace sippedes.Features.CivilDatas.Services
     {
         Task<CivilDataResponse> CreateNewCivil(CivilData payload);
         Task<CivilDataResponse> GetByNIK(string id);
-        Task<PageResponse<CivilDataResponse>> GetAllCivil(string? id, int page, int size);
+        Task<PageResponse<CivilDataResponse>> GetAllCivil(int page, int size);
         Task<CivilDataResponse> Update(CivilData payload);
         Task DeleteByNIK(string id);
     }

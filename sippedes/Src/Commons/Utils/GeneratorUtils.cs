@@ -13,10 +13,10 @@ public static class GeneratorUtils
             .Select(s => s[_random.Next(s.Length)]).ToArray());
     }
     
-    public static int GenerateRondomNumeric()
+    public static int GenerateRandomNumeric()
     {
         const string chars = "0123456789";
         return new string(Enumerable.Repeat(chars, 7)
-            .Select(s => s[_random.Next(s.Length)]).ToArray()).ParseToInt();
+            .Select(s => s[_random.Next(s.Length)]).ToArray()).Substring(0,5).ParseToInt();
     }
 }

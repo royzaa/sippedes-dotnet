@@ -69,7 +69,7 @@ namespace sippedes.Features.Auth.Services
                 await _adminDataService.CreateAdminData(new AdminData
                 {
                     FullName = request.FullName,
-                    IsActive = 1,
+                    IsActive = 0,
                     UserCredential = saveUser
                 });
 
@@ -84,7 +84,7 @@ namespace sippedes.Features.Auth.Services
             return registerResponse;
         }
 
-        public async Task<RegisterResponse> RegisterCivilin(RegisterCivilinRequest request)
+        public async Task<RegisterResponse> RegisterCivilian(RegisterCivilianRequest request)
         {
             var user = await _repository.Find(credential => credential.Email.Equals(request.Email));
             if (user is not null) throw new UnauthorizedException("Email ready");
@@ -94,7 +94,7 @@ namespace sippedes.Features.Auth.Services
 
             var registerResponse = await _persistence.ExecuteTransactionAsync(async () =>
             {
-                var role = await _roleService.GetOrSave(ERole.Civilin);
+                var role = await _roleService.GetOrSave(ERole.Civilian);
 
                 var userCredential = new UserCredential
                 {
