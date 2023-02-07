@@ -17,6 +17,7 @@ using sib_api_v3_sdk.Api;
 using sippedes.Cores.Model;
 using sippedes.Features.PushNotification.Services;
 using sippedes.Features.Letters.Services;
+using sippedes.Features.Pdf.Services;
 using sippedes.Features.Upload.Services;
 using sippedes.Src.Features.LegalizedLetter.Services;
 using sippedes.Src.Features.WitnessSignatures.Services;
@@ -45,10 +46,12 @@ public static class ConfigServiceCollectionExtension
         services.AddScoped<ILetterCategoryService, LetterCategoryService>();
         services.AddTransient<IUploadService, UploadService>();
         services.AddTransient<IUserCredentialService, UserCredentialService>();
+        services.AddTransient<IPdfService, PdfService>();
 
         // HttpClient
         services.AddHttpClient<FcmSender>();
         services.AddHttpClient<ApnSender>();
+        services.AddHttpClient();
 
         services.AddTransient<ILegalizedLetterService, LegalizedLetterService>();
         services.AddTransient<IWitnessSignatureService, WitnessSignatureService>();
@@ -65,6 +68,8 @@ public static class ConfigServiceCollectionExtension
         services.Configure<FcmConfigurationModel>(appFcmSettingsSection);
         var appAwsS3SettingSection = config.GetSection("AwsS3");
         services.Configure<AwsS3ConfigurationModel>(appAwsS3SettingSection);
+        var pdfApiConf = config.GetSection("PdfApiConf");
+        services.Configure<PdfApiConf>(pdfApiConf);
 
         //HangfireScheduler
         services.AddHangfire(x => x.UseSqlServerStorage(
