@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using sippedes.Cores.Dto;
+using sippedes.Cores.Entities;
 using sippedes.Cores.Exceptions;
 using sippedes.Cores.Repositories;
-using sippedes.Src.Cores.Entities;
 using sippedes.Src.Features.WitnessSignatures.DTO;
 
 namespace sippedes.Src.Features.WitnessSignatures.Services
