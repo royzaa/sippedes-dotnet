@@ -13,7 +13,6 @@ public class UploadService : IUploadService
 {
     private readonly string _bucketName;
     private readonly IAmazonS3 _awsS3Client;
-    private readonly IHttpClientFactory _httpClientFactory;
 
     public UploadService(IOptions<AwsS3ConfigurationModel> awsS3ConfigurationModel)
     {
@@ -29,10 +28,11 @@ public class UploadService : IUploadService
             clientConfig: s3ClientConfig);
     }
 
-    public async Task<string> UploadFileSignatureAsync(IFormFile file)
+    public async Task<UploadSignatureRes> UploadFileSignatureAsync(IFormFile file)
     {
         var presignedUrl = String.Empty;
-
+        var filePath = String.Empty;
+        
         try
         {
             using (var newMemoryStream = new MemoryStream())
@@ -41,7 +41,7 @@ public class UploadService : IUploadService
 
                 var randomCode = GeneratorUtils.GenerateRondomAlphaNumeric();
 
-                var filePath = $@"signature/{file.FileName}-{randomCode}";
+                filePath = $@"signature/{file.FileName}-{randomCode}";
 
                 var request = new PutObjectRequest
                 {
@@ -71,7 +71,11 @@ public class UploadService : IUploadService
             throw new Exception(e.Message);
         }
 
-        return presignedUrl;
+        return new UploadSignatureRes
+        {
+            Url = presignedUrl,
+            FilePath = filePath
+        };
     }
 
     public string GeneratePresignedUrl(PresignedUrlReqDto payload)

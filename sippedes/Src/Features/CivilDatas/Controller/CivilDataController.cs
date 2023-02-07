@@ -1,10 +1,14 @@
-﻿
+
+
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using sippedes.Cores.Controller;
 using sippedes.Cores.Dto;
 using sippedes.Cores.Entities;
+using sippedes.Features.CivilDatas.DTO;
 using sippedes.Features.CivilDatas.Services;
+using sippedes.Features.Users.Services;
 
 namespace sippedes.Src.Features.CivilDatas.Controller
 {
@@ -12,10 +16,12 @@ namespace sippedes.Src.Features.CivilDatas.Controller
     public class CivilDataController : BaseController
     {
         private readonly ICivilDataService _civilService;
+        private readonly IUserCredentialService _userCredentialService;
 
-        public CivilDataController(ICivilDataService civilService)
+        public CivilDataController(ICivilDataService civilService, IUserCredentialService userCredentialService)
         {
             _civilService = civilService;
+            _userCredentialService = userCredentialService;
         }
 
         [HttpPost]
@@ -56,6 +62,32 @@ namespace sippedes.Src.Features.CivilDatas.Controller
         {
             var updatedData = await _civilService.Update(civilData);
             return Success(updatedData);
+        }
+        
+        [HttpGet("profile")]
+        public async Task<IActionResult> GetSelfProfile()
+        {
+            var guid = User.Claims.FirstOrDefault(claim => claim.Type.Equals(ClaimTypes.PrimarySid))?.Value;
+            var data = await _userCredentialService.GetById(guid);
+
+            CivilDataResponse response = new CivilDataResponse
+            {
+                NIK = data.CivilData!.NIK,
+                NoKK = data.CivilData.NoKK,
+                Fullname = data.CivilData.Fullname,
+                Gender = data.CivilData.Gender,
+                BloodType = data.CivilData.BloodType,
+                Education = data.CivilData.Education,
+                BirthDate = data.CivilData.BirthDate,
+                Address = data.CivilData.Address,
+                Province = data.CivilData.Province,
+                City = data.CivilData.City,
+                District = data.CivilData.District,
+                Village = data.CivilData.Village,
+                Religion = data.CivilData.Religion
+            };
+            
+            return Success(response);
         }
     }
 }
