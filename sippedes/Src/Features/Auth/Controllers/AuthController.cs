@@ -25,11 +25,11 @@ namespace sippedes.Features.Auth.Controllers
             return Success(user);
         }
 
-        [HttpPost("register-civilin")]
+        [HttpPost("register-civilian")]
         [AllowAnonymous]
-        public async Task<IActionResult> RegisterCivilin([FromBody] RegisterCivilinRequest request)
+        public async Task<IActionResult> RegisterCivilian([FromBody] RegisterCivilianRequest request)
         {
-            var user = await _authService.RegisterCivilin(request);
+            var user = await _authService.RegisterCivilian(request);
 
             return Success(user);
         }

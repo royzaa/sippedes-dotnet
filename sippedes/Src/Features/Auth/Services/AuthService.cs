@@ -84,7 +84,7 @@ namespace sippedes.Features.Auth.Services
             return registerResponse;
         }
 
-        public async Task<RegisterResponse> RegisterCivilin(RegisterCivilinRequest request)
+        public async Task<RegisterResponse> RegisterCivilian(RegisterCivilianRequest request)
         {
             var user = await _repository.Find(credential => credential.Email.Equals(request.Email));
             if (user is not null) throw new UnauthorizedException("Email ready");

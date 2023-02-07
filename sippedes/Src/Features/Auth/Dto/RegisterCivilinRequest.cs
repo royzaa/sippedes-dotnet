@@ -2,7 +2,7 @@
 
 namespace sippedes.Features.Auth.Dto
 {
-    public class RegisterCivilinRequest
+    public class RegisterCivilianRequest
     {
         [Required, EmailAddress] public string Email { get; set; } = string.Empty;
 
