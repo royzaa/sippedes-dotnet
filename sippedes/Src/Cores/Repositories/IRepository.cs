@@ -8,6 +8,7 @@ public interface IRepository<TEntity>
     TEntity Attach(TEntity entity);
     Task<IEnumerable<TEntity>> SaveAll(IEnumerable<TEntity> entities);
     Task<TEntity?> FindById(Guid id);
+    Task<TEntity?> FindById(string id);
     Task<TEntity?> Find(Expression<Func<TEntity, bool>> criteria);
     Task<TEntity?> Find(Expression<Func<TEntity, bool>> criteria, string[] includes);
     Task<IEnumerable<TEntity>> FindAll();

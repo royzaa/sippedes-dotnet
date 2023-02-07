@@ -37,6 +37,11 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
         return await _context.Set<TEntity>().FindAsync(id);
     }
 
+    public async Task<TEntity?> FindById(string id)
+    {
+        return await _context.Set<TEntity>().FindAsync(id);
+    }
+
     public async Task<TEntity?> Find(Expression<Func<TEntity, bool>> criteria)
     {
         return await _context.Set<TEntity>().FirstOrDefaultAsync(criteria);
