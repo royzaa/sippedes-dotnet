@@ -5,9 +5,11 @@ namespace sippedes.Features.Otp.Dto;
 
 public class SendOtpReqDto
 {
-    [Required(ErrorMessage = "Email not valid"), EmailAddress]
-    public string Email { get; set; } = null!;
-    public Guid UserId { get; set; } 
+    // [Required(ErrorMessage = "Email not valid"), EmailAddress]
+    internal string Email { get; set; } = null!;
+    internal Guid UserId { get; set; } 
+    
+    internal string? Name { get; set; } 
 }
 
 public class VerifyOtpReqDto
@@ -15,5 +17,5 @@ public class VerifyOtpReqDto
     [Required]
     public int OtpCode { get; set; }
     
-    public Guid UserId { get; set; } 
+    internal string? UserId { get; set; } 
 }
