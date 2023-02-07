@@ -1,23 +1,26 @@
 ﻿using sippedes.Cores.Dto;
+using sippedes.Cores.Entities;
 using sippedes.Features.Letters.Dto;
+using static Amazon.S3.Util.S3EventNotification;
+using System.Linq.Expressions;
 
 namespace sippedes.Features.Letters.Services
 {
     public interface ILetterService
     {
-        Task<BussinessEvidenceLetterResponse> CreateBussinessEvidenceLetter(BussinessEvidenceLetterRequest request);
-        Task<BussinessEvidenceLetterResponse> UpdateBussinessEvidenceLetter(BussinessEvidenceLetterRequest request);
-        Task DeleteBussinessEvidenceLetter(string id);
-        Task<PageResponse<BussinessEvidenceLetterResponse>> GetAllBussinessEvidenceLetter(string? id, int page, int size);
+        Task<BussinessEvidenceLetterResponse> CreateBussinessEvidenceLetter(BussinessEvidenceLetterRequest request, string email);
+        Task<BussinessEvidenceLetterResponse> UpdateBussinessEvidenceLetter(BussinessEvidenceLetterRequest request, string id);
+        Task<PageResponse<BussinessEvidenceLetterResponse>> GetAllBussinessEvidenceLetter(int page, int size);
         Task<BussinessEvidenceLetterResponse> GetBussinessEvidenceLetterById(string id);
 
-        Task<TrackingResponse> GetTrackingBussinessEvidenceLetter(string id);
-        Task UpdateLetterTracking(string id);
+        Task UpdateLetterTrackingToOnProcess(string id);
+        Task UpdateLetterTrackingToComplete(string id);
+        Task Delete(string id);
 
-        Task<PoliceRecordLetterResponse> CreatePoliceRecordLetter(PoliceRecordLetterRequest request);
-        Task<PoliceRecordLetterResponse> UpdatePoliceRecordLetter(PoliceRecordLetterRequest request);
-        Task DeletePoliceRecordLetter(string id);
-        Task<PageResponse<PoliceRecordLetterResponse>> GetAllPoliceRecordLetter(string? id, int page, int size);
+
+        Task<PoliceRecordLetterResponse> CreatePoliceRecordLetter(PoliceRecordLetterRequest request, string email);
+        Task<PoliceRecordLetterResponse> UpdatePoliceRecordLetter(PoliceRecordLetterRequest request, string id);
+        Task<PageResponse<PoliceRecordLetterResponse>> GetAllPoliceRecordLetter(int page, int size);
         Task<PoliceRecordLetterResponse> GetPoliceRecordLetterById(string id);
     }
 }

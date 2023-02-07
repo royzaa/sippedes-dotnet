@@ -1,4 +1,4 @@
-﻿using BCrypt.Net;
+﻿    using BCrypt.Net;
 using sippedes.Commons.Constants;
 using sippedes.Cores.Entities;
 using sippedes.Cores.Exceptions;
@@ -69,7 +69,7 @@ namespace sippedes.Features.Auth.Services
                 await _adminDataService.CreateAdminData(new AdminData
                 {
                     FullName = request.FullName,
-                    IsActive = 1,
+                    IsActive = 0,
                     UserCredential = saveUser
                 });
 

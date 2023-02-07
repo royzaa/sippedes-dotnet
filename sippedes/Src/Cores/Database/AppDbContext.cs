@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using sippedes.Cores.Entities;
+using sippedes.Src.Cores.Entities;
 
 namespace sippedes.Cores.Database;
 

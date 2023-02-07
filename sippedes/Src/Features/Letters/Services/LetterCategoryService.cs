@@ -60,6 +60,21 @@ namespace sippedes.Features.Letters.Services
             }
         }
 
+        public async Task<LetterCategory> GetByName(string name)
+        {
+            try
+            {
+                var category = await _repository.Find(c => c.Category.Equals(name));
+                if (category is null) throw new NotFoundException("Category Not Found");
+                return category;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
         public async Task<LetterCategory> Update(LetterCategory letterCategory)
         {
             var update = _repository.Update(letterCategory);
