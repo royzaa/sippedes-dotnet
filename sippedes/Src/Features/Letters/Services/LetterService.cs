@@ -132,6 +132,8 @@ namespace sippedes.Features.Letters.Services
         {
             var letterData = await _repository.FindAll(
                 x => x.LetterCategory.Category == "Keterangan Usaha" && x.TrackingStatus != null,
+                page: page,
+                size: size,
                 includes: new string[] { nameof(Letter.LetterCategory), nameof(Letter.TrackingStatus) }
                 );
 
