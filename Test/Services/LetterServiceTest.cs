@@ -78,7 +78,7 @@ namespace Test.Services
             var policeRecordLetterRequest = new PoliceRecordLetterRequest
             {
                 Job = "Test",
-                Nescessity = "Test",
+                Necessity = "Test",
                 MaritalStatus = "Test"
             };
 
@@ -90,7 +90,7 @@ namespace Test.Services
                 Address = "Test",
                 Job = "Test",
                 Nationality = "Test",
-                Nescessity = "Test",
+                Necessity = "Test",
                 MaritalStatus = "Test",
                 Religion = "Test",
                 Status = "Test",
@@ -337,7 +337,7 @@ namespace Test.Services
             var policeRecordLetterRequest = new PoliceRecordLetterRequest
             {
                 Job = "Test",
-                Nescessity = "Test",
+                Necessity = "Test",
                 MaritalStatus = "Test"
             };
 
